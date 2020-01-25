@@ -1,0 +1,107 @@
+$pad: 18px;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-weight: 1000;
+  background-color: black;
+  overflow: hidden;
+  color: #aaa;
+  font-size: 16px;
+  font-family: 'alphanum20';
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, .8);
+}
+
+.bg-dark {
+  background-color: rgba(0, 0, 0, .6);
+}
+
+.bg-medium {
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 4px 4px 0px;
+}
+
+.pad-top {
+  padding-top: $pad;
+}
+
+.pad-left {
+  padding-left: $pad;
+}
+
+.pad-bottom {
+  padding-bottom: $pad;
+}
+
+.pad-right {
+  padding-right: $pad;
+}
+
+.pad {
+  padding: $pad;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.full {
+  @extend .full-height;
+  @extend .full-width;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0px auto;
+}
+
+.flex-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.position-absolute {
+  position: absolute;
+}
+
+.position-relative {
+  position: relative;
+}

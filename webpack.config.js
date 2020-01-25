@@ -2,22 +2,20 @@ const path = require('path');
 
 config = {
   mode: 'production',
-  entry: ['@babel/polyfill', './src/app.js'],
+  entry: ['@babel/polyfill', './src/index.ts'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'script.js',
   },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js'],
+  },
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
@@ -38,8 +36,19 @@ config = {
           },
         }],
       },
+      {
+          test: /\.ttf$/,
+          use: [
+            {
+              loader: 'ttf-loader'
+            },
+          ]
+      }
     ],
   },
+  mode: 'development',
+  devtool: 'eval-source-map',
+  watch: true
 };
 
 

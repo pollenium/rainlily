@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'alphanum20';
+  src:url('../fonts/alphanum20/alphanum20.eot');
+  src:url('../fonts/alphanum20/alphanum20.eot') format('embedded-opentype'),
+      url('../fonts/alphanum20/alphanum20.woff') format('woff'),
+      url('../fonts/alphanum20/alphanum20.ttf') format('truetype'),
+      url('../fonts/alphanum20/alphanum20.svg#alphanum20') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
