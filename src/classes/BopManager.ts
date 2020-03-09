@@ -53,6 +53,7 @@ export class BopManager {
       if (!missive.applicationId.uu.getIsEqual(applicationId)) {
         return
       }
+      
       const signedOrder = SignedOrder.fromLigma(missive.applicationData)
 
       const bop = await this.fetchBop()
