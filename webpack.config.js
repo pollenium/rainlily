@@ -4,20 +4,27 @@ const ModuleReplaceWebpackPlugin = require('module-replace-webpack-plugin');
 
 
 config = {
-  mode: 'production',
-  entry: ['@babel/polyfill', './src/index.ts'],
+  mode: 'development',
+  entry: ['@babel/polyfill', 'react-hot-loader/patch', './src/index.tsx'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'script.js',
   },
   resolve: {
     extensions: [ '.tsx', '.ts', '.js'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    }
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: [
+          'react-hot-loader/webpack',
+          'babel-loader',
+          'ts-loader'
+        ],
         exclude: /node_modules/,
       },
       {
@@ -47,9 +54,8 @@ config = {
             },
           ]
       }
-    ],
+    ]
   },
-  mode: 'development',
   devtool: 'eval-source-map',
   watch: true,
   plugins: [
@@ -65,8 +71,13 @@ config = {
         replace: './src/shims/wrtc.js'
       }]
     })
-  ]
-
+  ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: false,
+    port: 9000,
+    hot: true
+  }
 };
 
 

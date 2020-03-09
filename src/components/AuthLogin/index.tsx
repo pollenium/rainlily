@@ -7,7 +7,7 @@ import { CopyComponent } from '../Copy'
 import { ButtonComponent } from '../Button'
 import { generatePassword } from '../../utils/generatePassword'
 import { Uu } from 'pollenium-uvaursi'
-import { accountManager } from '../../globals/accountManager'
+import { accountsManager } from '../../globals/accountsManager'
 
 export class AuthLoginComponent extends React.Component<{ onLoginButtonClick: () => void }, { password: Uu }> {
 
@@ -46,7 +46,7 @@ export class AuthLoginComponent extends React.Component<{ onLoginButtonClick: ()
   onSubmit(e) {
     e.preventDefault()
     console.log('login')
-    accountManager.login(this.state.password)
+    accountsManager.login(this.state.password)
   }
 
 

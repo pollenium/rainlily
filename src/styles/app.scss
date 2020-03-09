@@ -40,6 +40,11 @@ body {
   margin: 0px auto;
 }
 
+.bg-darkest {
+  background-color: rgba(0, 0, 0, .9);
+}
+
+
 .bg-dark {
   background-color: rgba(0, 0, 0, .6);
 }
@@ -209,6 +214,17 @@ body {
 
 .text-bright {
   color: $colorBright;
+}
+
+.text-brighter {
+  color: $colorBrighter;
+}
+
+.text-brighter-on-hover {
+  @extend .transition-color;
+  &:hover {
+    color: $colorBrighter;
+  }
 }
 
 .position-absolute {

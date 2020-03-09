@@ -12,12 +12,9 @@ import { ModalComponent } from './components/Modal'
 import { Market } from './classes/Market'
 import { markets } from './globals/markets'
 import { Snowdrop } from 'pollenium-snowdrop'
+import { hot } from 'react-hot-loader'
 
-import './index.scss';
-
-const e = createElement;
-
-class AppComponent extends Component<{}, {
+export class AppComponent extends Component<{}, {
   mainElement?: JSX.Element,
   modalElement?: JSX.Element,
   navbarSecondaryOptionId?: string,
@@ -103,5 +100,4 @@ class AppComponent extends Component<{}, {
   }
 }
 
-const domContainer = document.querySelector('#__root__');
-render(e(AppComponent), domContainer);
+export const HotAppComponent = hot(module)(AppComponent)

@@ -1,5 +1,14 @@
 @import '../../index.scss';
 
 .modal {
-  @extend .bg-dark;
+  @extend .position-absolute;
+  @extend .bg-darkest;
+  z-index: 100;
+  opacity: 0;
+
+  &.open {
+    @extend .full;
+    opacity: 1;
+  }
+
 }

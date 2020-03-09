@@ -7,7 +7,7 @@ import { AuthComponent } from '../Auth'
 import { Address } from 'pollenium-buttercup'
 import './index.scss'
 import { Account } from '../../classes/Account'
-import { accountManager } from '../../globals/accountManager'
+import { accountsManager } from '../../globals/accountsManager'
 
 export class MarketBalancesComponent extends React.Component<
   { market: Market },
@@ -16,9 +16,9 @@ export class MarketBalancesComponent extends React.Component<
 
   constructor(props) {
     super(props)
-    this.state = { account: accountManager.getAccount() }
+    this.state = { account: accountsManager.getAccount() }
 
-    accountManager.accountSnowdrop.addHandle((account) => {
+    accountsManager.accountSnowdrop.addHandle((account) => {
       this.setState({ account })
     })
   }

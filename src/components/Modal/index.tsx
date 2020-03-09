@@ -1,11 +1,14 @@
 import * as React from 'react'
+import { LinearIconComponent } from '../LinearIcon'
+import { DividerComponent } from '../Divider'
 import { modalManager } from '../../globals/modalManager'
 import classNames from 'classnames'
 import './index.scss'
 
 export class ModalComponent extends React.Component<{}, {
     title: string | null,
-    isOpen: boolean
+    isOpen: boolean,
+    mainElement: JSX.Element | null
   }
 > {
 
@@ -13,23 +16,38 @@ export class ModalComponent extends React.Component<{}, {
     super(props)
     this.state = {
       title: null,
-      isOpen: false
+      isOpen: false,
+      mainElement: null
     }
 
     modalManager.modalStructSnowdrop.addHandle((modalStruct) => {
+      console.log('modalStruct', modalStruct)
       this.setState({
-        isOpen: true,
-        title: modalStruct.title
+        ...modalStruct,
+        isOpen: true
       })
     })
+
   }
 
   render() {
     return (
-      <div className={ classNames('modal', { open: this.state.isOpen} )}>
-        <div className="container pad-top">
-          { this.getTitleElement() }
+      <div className={ classNames('modal', { open: this.state.isOpen } )}>
+        <div className="container text-bright">
+          <div className="flex-columns pad-vertical pad-horizontal-if-narrow text-large">
+            <div className="flex-grow">
+              { this.getTitleElement() }
+            </div>
+            <div className="text-right text-brighter-on-hover cursor-pointer" onClick={ this.close.bind(this) }>
+              <span className="text-medium">Close</span>
+              <span className="display-inline-block" style={{ marginBottom: -4 }}>
+                <LinearIconComponent icon="cross"/>
+              </span>
+            </div>
+          </div>
         </div>
+        <DividerComponent/>
+        { this.state.mainElement }
       </div>
     )
   }
@@ -38,7 +56,11 @@ export class ModalComponent extends React.Component<{}, {
     if (this.state.title === null) {
       return null
     }
-    return <div className="pad-horizontal-if-narrow">{this.state.title}</div>
+    return <span>{this.state.title}</span>
+  }
+
+  close() {
+    this.setState({ isOpen: false })
   }
 
 }

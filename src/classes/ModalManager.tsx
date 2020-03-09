@@ -1,20 +1,33 @@
 import { Snowdrop } from 'pollenium-snowdrop'
 import * as React from 'react'
+import { AccountsComponent } from '../components/Accounts'
 
 export interface ModalStruct {
   title: string | null,
-  element: JSX.Element
+  mainElement: JSX.Element
 }
 
 export class ModalManager {
 
   readonly modalStructSnowdrop = new Snowdrop<ModalStruct>()
 
+  private accountsElement: JSX.Element | null = null
+
   constructor() {
+  }
+
+  openAccounts() {
     this.modalStructSnowdrop.emit({
-      title: 'x',
-      element: (<div>XYZ</div>)
+      title: 'Accounts',
+      mainElement: this.getAccountsElement()
     })
+  }
+
+  getAccountsElement(): JSX.Element {
+    if (this.accountsElement === null) {
+      this.accountsElement = <AccountsComponent />
+    }
+    return this.accountsElement
   }
 
 }

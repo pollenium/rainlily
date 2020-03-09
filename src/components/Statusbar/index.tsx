@@ -3,8 +3,9 @@ import { Account } from '../../classes/Account'
 import { LinearIconComponent } from '../LinearIcon'
 import { Uint256, Address } from 'pollenium-buttercup'
 import { bellflower } from '../../globals/bellflower'
-import { accountManager } from '../../globals/accountManager'
+import { accountsManager } from '../../globals/accountsManager'
 import { dai } from '../../globals/dai'
+import { modalManager } from '../../globals/modalManager'
 import './index.scss'
 
 export class StatusbarComponent extends React.Component<{},{
@@ -16,8 +17,8 @@ export class StatusbarComponent extends React.Component<{},{
   constructor(props) {
     super(props)
     this.state = {
-      account: accountManager.getAccount(),
-      daiBalance: accountManager.getEngineBalance(dai),
+      account: accountsManager.getAccount(),
+      daiBalance: accountsManager.getEngineBalance(dai),
       blockNumber: null
     }
 
@@ -27,14 +28,14 @@ export class StatusbarComponent extends React.Component<{},{
       })
     })
 
-    accountManager.fetchEngineBalance(dai).then((daiBalance) => {
+    accountsManager.fetchEngineBalance(dai).then((daiBalance) => {
       this.setState({ daiBalance })
     })
 
-    accountManager.accountSnowdrop.addHandle(async (account) => {
+    accountsManager.accountSnowdrop.addHandle(async (account) => {
       this.setState({
         account,
-        daiBalance: await accountManager.fetchEngineBalance(dai)
+        daiBalance: await accountsManager.fetchEngineBalance(dai)
       })
     })
 
@@ -50,7 +51,7 @@ export class StatusbarComponent extends React.Component<{},{
           <div className="width-third text-center">
             { this.getDaiBalanceElement() }
           </div>
-          <div className="flex-grow text-right">
+          <div className="flex-grow text-right text-brighter-on-hover cursor-pointer" onClick={ () => { modalManager.openAccounts() } }>
             { this.getAccountElement() }
           </div>
         </div>
@@ -74,4 +75,5 @@ export class StatusbarComponent extends React.Component<{},{
       Dai Balance ${this.state.daiBalance === null ? '…' : this.state.daiBalance.toNumberString(10) }
     </span>)
   }
+
 }
