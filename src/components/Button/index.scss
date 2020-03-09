@@ -1,0 +1,23 @@
+@import '../../index.scss';
+
+.button {
+  @extend .border;
+  @extend .pad-horizontal;
+  @extend .pad-small-vertical;
+  @extend .cursor-pointer;
+  @extend .transition;
+  background: none;
+  outline: none;
+  color: inherit;
+  font-family: 'alphanum20';
+  font-size: inherit;
+  &:hover:not(:disabled) {
+    color: $colorBright;
+    border-color: $colorBright;
+  }
+  &:disabled {
+    color: $colorMuted;
+    border-color: $colorMuted;
+    cursor: not-allowed;
+  }
+}

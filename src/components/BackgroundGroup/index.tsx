@@ -9,9 +9,10 @@ class BackgroundLayerComponent extends React.Component<BackgroundLayerProps> {
     return (
       <div
         className="full overflow-hidden"
-        style={{ width: 'calc(100% + 80px)', marginLeft: '-40', filter: 'blur(40px)' }}
       >
-        <img className="full-width" src={this.props.imageUrl} />
+        <div style={{ width: 'calc(100% + 80px)', marginLeft: '-40', filter: 'blur(40px)' }}>
+          <img className="width-full" src={this.props.imageUrl} />
+        </div>
       </div>
     )
   }
@@ -20,6 +21,7 @@ class BackgroundLayerComponent extends React.Component<BackgroundLayerProps> {
 export class BackgroundGroupComponent extends React.Component {
   render() {
     return (
+      /* BackgroundGroup */
       <div
         className="full position-absolute"
         style={{ zIndex: -1 }}

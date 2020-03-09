@@ -1,0 +1,7 @@
+@import '../../index.scss';
+
+.statusbar {
+  @extend .text-small;
+  background-color: black;
+
+}

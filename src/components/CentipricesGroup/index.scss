@@ -1,0 +1,36 @@
+@import '../../index.scss';
+
+.centiprices-group {
+  @extend .block-center;
+  @extend .overflow-hidden;
+  @extend .border-top;
+  @extend .border-bottom;
+  font-size: 16px;
+  width: 140px;
+  height: 5em;
+  font-family: "Lucida Console", Monaco, monospace;
+
+  .centiprice-rows {
+    @extend .width-full;
+    @extend .overflow-hidden;
+    @extend .line-height-medium;
+    box-shadow: 0 30px 40px rgba(0,0,0,.1);
+    transition: margin-top 1s ease-in-out;
+
+    .centiprices-row {
+      height: 1em;
+      transition: opacity 1s ease-in-out;
+
+      .block-number {
+        @extend .text-small;
+        @extend .line-height-medium;
+        @extend .width-half;
+        color: $colorMuted;
+      }
+      .block-centiprices {
+        @extend .flex-grow;
+        @extend .text-small;
+      }
+    }
+  }
+}

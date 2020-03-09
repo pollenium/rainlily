@@ -1,0 +1,11 @@
+@import '../../index.scss';
+
+.navbar-secondary {
+  .option {
+    display: inline-block;
+    @extend .pad-left;
+  }
+  .option.selected {
+    color: white;
+  }
+}

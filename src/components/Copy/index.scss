@@ -1,0 +1,17 @@
+@import '../../index.scss';
+
+.copy {
+  @extend .transition;
+  @extend .border;
+  @extend .cursor-pointer;
+
+  &:hover {
+    border-color: $colorBright;
+    color: $colorBright;
+  }
+
+  &.copied {
+    border-color: $colorBrighter;
+    color: $colorBrighter;
+  }
+}

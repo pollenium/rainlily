@@ -1,0 +1,39 @@
+@import '../../index.scss';
+
+.bramble-monitor {
+
+  position: relative;
+  background-color: #aaa;
+  color: #333;
+  height: 34px;
+
+  .hidden {
+    display: none;
+  }
+
+  .background {
+    @extend .position-absolute;
+    @extend .full;
+    z-index: 1;
+
+    .progress-bar {
+      transition: width 1s linear, background-color 1s ease-in-out;
+      @extend .height-full;
+      background-color: #ebab34;
+      width: 0%;
+    }
+  }
+
+  .foreground {
+    @extend .position-absolute;
+    @extend .full;
+    z-index: 2;
+  }
+
+  &.connected {
+    .progress-bar {
+      background-color: #6B8E23;
+    }
+  }
+
+}

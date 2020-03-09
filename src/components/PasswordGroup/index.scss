@@ -1,0 +1,27 @@
+@import '../../index.scss';
+
+.input-group {
+  @extend .transition;
+  .main {
+    border-bottom: 1px solid $colorDefault;
+  }
+  .input {
+    @extend .pad-small-horizontal;
+    border: none;
+    background: none;
+    outline: none;
+    color: inherit;
+    font-family: 'alphanum20';
+    font-size: inherit;
+  }
+  &.active {
+    color: $colorBright;
+    .main {
+      border-bottom: 1px solid $colorBright;
+    }
+    .input {
+      color: $colorBrighter;
+    }
+  }
+
+}

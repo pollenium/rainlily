@@ -1,4 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
+const ModuleReplaceWebpackPlugin = require('module-replace-webpack-plugin');
+
 
 config = {
   mode: 'production',
@@ -48,7 +51,22 @@ config = {
   },
   mode: 'development',
   devtool: 'eval-source-map',
-  watch: true
+  watch: true,
+  plugins: [
+    new ModuleReplaceWebpackPlugin({
+      modules: [{
+        test: /^tiny-worker$/,
+        replace: './src/shims/Worker.js'
+      }, {
+        test: /^ws$/,
+        replace: './src/shims/WebSocket.js'
+      }, {
+        test: /^wrtc$/,
+        replace: './src/shims/wrtc.js'
+      }]
+    })
+  ]
+
 };
 
 
