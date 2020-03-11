@@ -115,6 +115,12 @@ export class AccountsManager {
         this.dianthusClient.genAndUploadPermitRequest({
           holderPrivateKey: this.account.keypair.privateKey,
           nonce
+        }).catch((error) => {
+          console.log(error)
+          this.notificationsManager.queueNotification({
+            type: NotificationType.ERROR,
+            mainElement: (<span>Deposit Permit Failed: { error.message }</span>)
+          })
         })
 
       } else {
