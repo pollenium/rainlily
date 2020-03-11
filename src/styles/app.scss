@@ -1,16 +1,21 @@
-$pad: 18px;
-$padSmall: 8px;
+$space: 18px;
+$spaceSmall: 8px;
 $containerWidth: 800px;
+
 $colorBright: #ccc;
 $colorBrighter: #eee;
 $colorDefault: #aaa;
 $colorMuted: #777;
+$colorSuccess: #51A351;
+$colorWarning: #F89406;
+$colorError: #BD362F;
+$colorInfo: #0088CC;
+
 $border: 1px solid rgba(255, 255, 255, .1);
 
 * {
   box-sizing: border-box !important;
   @extend .text-medium;
-  @extend .line-height-medium;
   @extend .overflow-hidden;
 }
 
@@ -20,7 +25,13 @@ body {
   overflow: hidden;
   color: $colorDefault;
   font-size: 16px;
+  line-height: 1.25em;
   font-family: 'alphanum20';
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 ::-webkit-scrollbar {
@@ -58,23 +69,23 @@ body {
 }
 
 .pad-top {
-  padding-top: $pad;
+  padding-top: $space;
 }
 
 .pad-left {
-  padding-left: $pad;
+  padding-left: $space;
 }
 
 .pad-bottom {
-  padding-bottom: $pad;
+  padding-bottom: $space;
 }
 
 .pad-right {
-  padding-right: $pad;
+  padding-right: $space;
 }
 
 .pad {
-  padding: $pad;
+  padding: $space;
 }
 
 .pad-vertical {
@@ -88,29 +99,33 @@ body {
 }
 
 .pad-horizontal-if-narrow {
-  @media(max-width: $containerWidth + $pad) {
+  @media(max-width: $containerWidth + $space) {
     @extend .pad-horizontal;
+  }
+  @media(min-width: $containerWidth + $space) {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
 .pad-small-top {
-  padding-top: $padSmall;
+  padding-top: $spaceSmall;
 }
 
 .pad-small-left {
-  padding-left: $padSmall;
+  padding-left: $spaceSmall;
 }
 
 .pad-small-bottom {
-  padding-bottom: $padSmall;
+  padding-bottom: $spaceSmall;
 }
 
 .pad-small-right {
-  padding-right: $padSmall;
+  padding-right: $spaceSmall;
 }
 
 .pad-small {
-  padding: $padSmall;
+  padding: $spaceSmall;
 }
 
 .pad-small-vertical {
@@ -161,22 +176,29 @@ body {
   margin: 0px auto;
 }
 
-.flex-rows {
+.flex {
   display: flex;
+  & > * {
+    @extend .flex-no-change;
+  }
+}
+
+.flex-rows {
+  @extend .flex;
   flex-direction: column;
 }
 
 .flex-columns {
-  display: flex;
+  @extend .flex;
   flex-direction: row;
 }
 
 .flex-grow {
-  flex-grow: 1;
+  flex-grow: 1 !important;
 }
 
 .flex-shrink {
-  flex-shrink: 1;
+  flex-shrink: 1 !important;
 }
 
 .flex-no-change {
@@ -206,10 +228,6 @@ body {
 
 .text-muted {
   color: $colorMuted;
-}
-
-.line-height-medium {
-  line-height: 20px;
 }
 
 .text-bright {

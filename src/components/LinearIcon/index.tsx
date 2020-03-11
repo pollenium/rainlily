@@ -1,4 +1,5 @@
 import * as React from 'react'
+import classNames from 'classnames'
 
 interface Props {
   icon: string
@@ -7,7 +8,9 @@ interface Props {
 export class LinearIconComponent extends React.Component<Props> {
   render() {
     return (
-      <span className={`lnr lnr-${this.props.icon}`}></span>
+      <div className="display-inline-block position-relative" style={{ height: '1.25em', width: '1.25em', padding: '.125em' }}>
+        <div className={ classNames('lnr', `lnr-${this.props.icon}`) }></div>
+      </div>
     )
   }
 }

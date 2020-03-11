@@ -38,8 +38,8 @@ export class ModalComponent extends React.Component<{}, {
             <div className="flex-grow">
               { this.getTitleElement() }
             </div>
-            <div className="text-right text-brighter-on-hover cursor-pointer" onClick={ this.close.bind(this) }>
-              <span className="text-medium">Close</span>
+            <div className="text-right text-brighter-on-hover cursor-pointer text-medium" onClick={ this.close.bind(this) }>
+              <span>Close</span>
               <span className="display-inline-block" style={{ marginBottom: -4 }}>
                 <LinearIconComponent icon="cross"/>
               </span>

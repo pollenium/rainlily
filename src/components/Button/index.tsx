@@ -5,7 +5,7 @@ import './index.scss'
 export class ButtonComponent extends React.Component<{ text: string, icon?: string, onClick?: ()=>void, isDisabled?: boolean }> {
   render() {
     const linearIconComponent = this.props.icon ? (
-      <span className="pad-right"><LinearIconComponent icon={ this.props.icon } /></span>
+      <span className="pad-small-right"><LinearIconComponent icon={ this.props.icon } /></span>
     ) : null
     return (
       <button
@@ -13,7 +13,7 @@ export class ButtonComponent extends React.Component<{ text: string, icon?: stri
         onClick={ this.props.onClick ? this.props.onClick : null }
         disabled={ this.props.isDisabled }>
         { linearIconComponent }
-        <span>{ this.props.text }</span>
+        <span className="display-inline-block">{ this.props.text }</span>
       </button>
     )
   }

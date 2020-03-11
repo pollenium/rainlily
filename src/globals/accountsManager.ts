@@ -1,10 +1,17 @@
 import { AccountsManager } from '../classes/AccountsManager'
-import { engine } from './engine'
+import { engine, dai } from 'pollenium-xanthoceras'
 import { provider } from './provider'
 import { bellflower } from './bellflower'
+import { notificationsManager } from './notificationsManager'
+import { daishReader } from './daishReader'
+import { dianthusClient } from './dianthusClient'
 
 export const accountsManager = new AccountsManager({
   engine,
   provider,
-  bellflower
+  bellflower,
+  notificationsManager,
+  dai,
+  daishReader,
+  dianthusClient
 })

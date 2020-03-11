@@ -28,7 +28,7 @@ export class MarketOverviewComponent extends React.Component<
 
   render() {
     return (
-      <div className="overview container pad-vertical pad-horizontal-if-narrow">
+      <div className="overview container pad-vertical">
         <div className="flex-columns pad-bottom">
           <div style={{ width: '50%' }}>
             <div className="text-large text-center">Agree</div>

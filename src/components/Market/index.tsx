@@ -52,9 +52,11 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
     return (
       <div className="full flex-rows">
         <div className="flex-no-change">
-          <OptionsComponent
-            optionStructs={ optionStructs }
-            optionId={ SectionName.OVERVIEW }/>
+          <div className="pad-horizontal-if-narrow">
+            <OptionsComponent
+              optionStructs={ optionStructs }
+              optionId={ SectionName.OVERVIEW }/>
+          </div>
           <DividerComponent/>
         </div>
         <div className="flex-shrink overflow-y-scroll">{ this.getSection() }</div>
@@ -74,7 +76,7 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
         )
       default:
         return (
-          <div className="container pad-horizontal-if-narrow">{ this.state.sectionName }</div>
+          <div className="container">{ this.state.sectionName }</div>
         )
     }
   }

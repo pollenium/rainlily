@@ -9,20 +9,23 @@ import { generatePassword } from '../../utils/generatePassword'
 import { Uu } from 'pollenium-uvaursi'
 import { accountsManager } from '../../globals/accountsManager'
 
+const uuEmpty = new Uu(new Uint8Array())
+
 export class AuthLoginComponent extends React.Component<{ onLoginButtonClick: () => void }, { password: Uu }> {
 
   constructor(props) {
     super(props)
-    this.state = { password: new Uu(new Uint8Array()) }
+    this.state = { password: uuEmpty }
   }
 
   render() {
     return (
       <div>
         <DividerComponent/>
-        <form className="pad" onSubmit= { this.onSubmit.bind(this) }>
+        <form className="pad-top pad-horizontal-if-narrow" onSubmit= { this.onSubmit.bind(this) }>
           <PasswordGroupComponent
             label="Password"
+            value = { this.state.password.toUtf8() }
             onValue={ this.onPasswordInputChange.bind(this) }
           />
           <div className="pad-top text-right">
@@ -45,7 +48,9 @@ export class AuthLoginComponent extends React.Component<{ onLoginButtonClick: ()
 
   onSubmit(e) {
     e.preventDefault()
-    console.log('login')
+    this.setState({
+      password: uuEmpty
+    })
     accountsManager.login(this.state.password)
   }
 

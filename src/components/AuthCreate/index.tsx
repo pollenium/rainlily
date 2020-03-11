@@ -42,8 +42,11 @@ export class AuthCreateComponent extends React.Component<{ onCreated: () => void
 
     return (
       <div className="auth-create">
-        <div className="pad-horizontal">
-          Do you have a password generator? <OptionsComponent optionStructs={ optionStructs } optionId={ this.state.subsectionName } />
+        <div className="pad-horizontal-if-narrow">
+          <OptionsComponent
+            label="Do you have a password generator?"
+            optionStructs={ optionStructs }
+            optionId={ this.state.subsectionName } />
         </div>
         { this.getSubsectionElement() }
       </div>
@@ -65,9 +68,10 @@ export class AuthCreateComponent extends React.Component<{ onCreated: () => void
         return (
           <div>
             <DividerComponent/>
-            <form className="pad" onSubmit={ this.props.onCreated }>
+            <form className="pad-top pad-horizontal-if-narrow" onSubmit={ this.props.onCreated }>
               <p className="pad-bottom">Great! Please generate a password with atleast 48 characters. A long random password is necessary to use Rainlily safely.</p>
               <PasswordGroupComponent
+                value={ this.state.password.toUtf8() }
                 label="Password"
                 onValue={ this.onPasswordInputChange.bind(this) }
               />
@@ -83,10 +87,11 @@ export class AuthCreateComponent extends React.Component<{ onCreated: () => void
         )
       case SubsectionName.NO:
         const password = generatePassword()
+        console.log(password)
         return (
           <div>
             <DividerComponent/>
-            <div className="pad">
+            <div className="pad-top pad-horizontal-if-narrow">
               <p className="pad-bottom">
                 No worries! Rainlily requires every user to have a unique, random password. We've generated one for you.
               </p>

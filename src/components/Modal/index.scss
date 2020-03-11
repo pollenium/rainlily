@@ -2,7 +2,7 @@
 
 .modal {
   @extend .position-absolute;
-  @extend .bg-darkest;
+  background-color: #111;
   z-index: 100;
   opacity: 0;
 

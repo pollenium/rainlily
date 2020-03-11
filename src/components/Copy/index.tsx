@@ -20,10 +20,7 @@ export class CopyComponent extends React.Component<{ text: string }, { isCopied:
         <div className="text-center flex-grow overflow-ellipsis">{
           this.state.isCopied ? 'Copied!' : this.props.text
         }</div>
-        <div className="flex-shrink pad-small-left" style={{
-          maxWidth: 18,
-          textAlign: 'right'
-        }}>
+        <div className="flex-shrink pad-small-left">
           <LinearIconComponent icon={ this.state.isCopied ? 'clipboard-check' : 'clipboard-empty' }/>
         </div>
       </div>

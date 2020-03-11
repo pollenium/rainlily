@@ -39,12 +39,12 @@ export class AuthComponent extends React.Component<{}, { subsectionName: Subsect
 
     return (
       <div className="auth">
-        <div className="pad-horizontal">
-          Do you have an account?
-            <OptionsComponent
-              optionStructs={ optionStructs }
-              optionId={ this.state.subsectionName }
-            />
+        <div className="pad-horizontal-if-narrow">
+          <OptionsComponent
+            label="Do you have an account?"
+            optionStructs={ optionStructs }
+            optionId={ this.state.subsectionName }
+          />
         </div>
         { this.getSubsectionElement() }
       </div>

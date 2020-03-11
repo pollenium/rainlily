@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { createElement, Component } from 'react';
 import { render } from 'react-dom';
+import { NotificationsComponent } from './components/Notifications'
 import { StatusbarComponent } from './components/Statusbar'
 import { NavbarPrimaryComponent } from './components/NavbarPrimary'
 import { NavbarSecondaryComponent } from './components/NavbarSecondary'
@@ -59,12 +60,13 @@ export class AppComponent extends Component<{}, {
       <div className="full">
         <BackgroundGroupComponent/>
         <div className="flex-rows full bg-dark">
-          <div className="flex-no-change">
+          <div className="flex-no-change position-relative">
+            <NotificationsComponent/>
             <StatusbarComponent/>
           </div>
           <div className="flex-grow">
             <ModalComponent/>
-            <div className="flex full">
+            <div className="flex-rows full">
               <div className="flex-no-change">
                 <NavbarSecondaryComponent
                   optionStructs={ navbarSecondaryOptionStructs }

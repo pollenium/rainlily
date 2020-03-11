@@ -6,8 +6,14 @@
   display: inline-block;
 
   .option {
+    @extend .pad-vertical;
     @extend .pad-left;
+    @extend .text-brighter-on-hover;
     display: inline-block;
+
+    &:first-child {
+      padding-left: 0;
+    }
 
     &.selected {
       color: white;

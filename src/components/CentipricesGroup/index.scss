@@ -13,7 +13,6 @@
   .centiprice-rows {
     @extend .width-full;
     @extend .overflow-hidden;
-    @extend .line-height-medium;
     box-shadow: 0 30px 40px rgba(0,0,0,.1);
     transition: margin-top 1s ease-in-out;
 
@@ -23,7 +22,6 @@
 
       .block-number {
         @extend .text-small;
-        @extend .line-height-medium;
         @extend .width-half;
         color: $colorMuted;
       }

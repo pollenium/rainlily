@@ -3,7 +3,11 @@ import { LinearIconComponent } from '../LinearIcon'
 import './index.scss'
 import classNames from 'classnames'
 
-export class PasswordGroupComponent extends React.Component<{ label: string, onValue: (passwordUtf8: string)=>void  }, { isActive: boolean, isVisible: boolean }> {
+export class PasswordGroupComponent extends React.Component<{
+  label: string,
+  value: string,
+  onValue: (passwordUtf8: string)=>void
+}, { isActive: boolean, isVisible: boolean }> {
 
   private passwordInput: HTMLInputElement
 
@@ -31,6 +35,7 @@ export class PasswordGroupComponent extends React.Component<{ label: string, onV
           </div>
           <div className="flex-grow">
             <input
+              value={ this.props.value }
               type={ this.state.isVisible ? 'text' : 'password' }
               className="input full"
               onFocus={ this.onInputFocus.bind(this) }

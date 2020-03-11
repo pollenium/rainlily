@@ -58,6 +58,7 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
 }
 
 export class OptionsComponent extends React.Component<{
+  label?: string,
   optionStructs: OptionStruct[],
   optionId?: string
 }, {
@@ -88,17 +89,18 @@ export class OptionsComponent extends React.Component<{
 
     return (
       <div className="options">
-        <div className="container pad-vertical flex-columns">
+        <div className="flex-columns">
+          { this.getLabelElement() }
           { optionComponents }
         </div>
-        <div className="shadow position-absolute" style={{
-          bottom: 0,
-          left: -4,
-          right: -4,
-          height: 12,
-          zIndex: 100
-        }}></div>
       </div>
     )
+  }
+
+  getLabelElement(): JSX.Element {
+    if (!this.props.label) {
+      return null
+    }
+    return (<div className="display-inline-block pad-vertical pad-right">{this.props.label}</div>)
   }
 }
