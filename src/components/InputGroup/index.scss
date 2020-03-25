@@ -1,0 +1,55 @@
+@import '../../index.scss';
+
+.input-group {
+  @extend .pad-left;
+  @extend .border;
+  @extend .transition-color;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+  .main {
+    @extend .transition-border-color;
+    border-bottom: 1px solid $colorMuted;
+  }
+  .input {
+    @extend .transition-color;
+    border: none;
+    background: none;
+    outline: none;
+    color: inherit;
+    font-family: 'alphanum20';
+    font-size: inherit;
+  }
+
+  &:hover {
+    color: $colorBright;
+    .main {
+      // border-bottom: 1px solid $colorDefault;
+    }
+    .input {
+      color: $colorBright;
+    }
+  }
+
+  &.active {
+    color: $colorBrighter;
+    .main {
+      // border-bottom: 1px solid $colorBright;
+    }
+    .input {
+      color: $colorBrighter;
+    }
+  }
+
+  &.invalid {
+    .main {
+      border-bottom: 1px solid $colorError;
+    }
+  }
+
+  .error-message {
+    color: $colorError;
+    @extend .pad-small-top;
+  }
+
+}

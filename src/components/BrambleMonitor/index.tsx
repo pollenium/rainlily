@@ -1,32 +1,41 @@
 import * as React from 'react'
 import { anemoneClient } from '../../globals/anemoneClient'
 import { FRIENDSHIP_STATUS } from 'pollenium-anemone'
+import { BackgroundProgressBarComponent } from '../BackgroundProgressBar'
+import { Theme } from '../../Theme'
 import classNames from 'classnames'
-import './index.scss'
 
-export class BrambleMonitorComponent extends React.Component<{}, { progress: number, isConnected: boolean, isHidden: boolean }> {
+export class BrambleMonitorComponent extends React.Component<{}, { progress: number, theme: Theme, isHidden: boolean, isConnected: boolean }> {
+
+  private loopIncrementProgressIntervalId: number | null = null
 
   constructor(props) {
     super(props)
-    this.state = { progress: 0, isConnected: false, isHidden: false }
-    this.loopIncrementProgress()
+    this.state = { progress: 0, theme: Theme.WARNING, isHidden: true, isConnected: false }
 
     anemoneClient.summarySnowdrop.addHandle((clientSummary) => {
       const connectedFriendshipsCount = clientSummary.struct.partySummary.getFriendshipsCountByStatus(FRIENDSHIP_STATUS.CONNECTED)
-      if (connectedFriendshipsCount > 0 && !this.state.isConnected) {
+      if (connectedFriendshipsCount === 0) {
         this.setState({
-          isConnected: true
-        })
-        return
-      }
-      if (connectedFriendshipsCount === 0 && this.state.isConnected) {
-        this.setState({
-          progress: 0,
           isConnected: false,
-          isHidden: false
+          isHidden: false,
+          theme: Theme.WARNING,
         })
-        this.loopIncrementProgress()
-        return
+        this.maybeLoopIncrementProgress()
+      } else {
+        this.maybeStopLoopIncrementProgress()
+        this.setState({
+          isConnected: true,
+          theme: Theme.SUCCESS,
+          progress: 100
+        })
+        setTimeout(() => {
+          if (this.loopIncrementProgressIntervalId !== null) {
+            return
+          }
+          this.setState({ isHidden: true, progress: 0 })
+
+        }, 2000)
       }
     })
   }
@@ -34,41 +43,48 @@ export class BrambleMonitorComponent extends React.Component<{}, { progress: num
   render() {
     return (
       <div className={ classNames('bramble-monitor', 'flex-no-change', {
-        connected: this.state.isConnected,
         'display-none': this.state.isHidden
       })}>
-        <div className="background">
-          <div className="progress-bar" style={{
-            width: `${this.state.progress}%`
-          }}></div>
-        </div>
-        <div className="foreground">
-          <div className="container pad-small-vertical pad-horizontal-if-narrow text-center">
-            { this.state.isConnected ? 'Connected!' : 'Connecting to decentralized order book'}
-          </div>
-        </div>
+        <BackgroundProgressBarComponent
+          theme={this.state.theme}
+          progress={this.state.progress}
+          main={
+            <div className="container pad-small-vertical pad-horizontal-if-narrow text-center">
+              { this.state.isConnected ? 'Connected!' : 'Connecting to decentralized order book' }
+            </div>
+          }
+          transitionSpeed={ 2 }
+        />
       </div>
     )
   }
 
-  loopIncrementProgress() {
+  maybeLoopIncrementProgress() {
 
-    if (this.state.progress >= 100) {
+    if (this.loopIncrementProgressIntervalId !== null) {
       return
     }
 
-    if (this.state.isConnected) {
-      this.setState({ progress: 100 })
-      setTimeout(() => {
-        console.log('set isHiden true')
-        this.setState({ isHidden: true })
-      }, 2000)
+    this.loopIncrementProgressIntervalId = setInterval(() => {
+      const increment = Math.floor((100 - this.state.progress) / 4)
+      const progress = this.state.progress + increment
+
+      this.setState({ progress })
+
+      if (progress >= 100) {
+        this.maybeStopLoopIncrementProgress()
+        return
+      }
+
+    }, 1000)
+  }
+
+  maybeStopLoopIncrementProgress() {
+    if (this.loopIncrementProgressIntervalId === null) {
       return
     }
-
-    const increment = Math.floor((100 - this.state.progress) / 4)
-    this.setState({ progress: this.state.progress + increment })
-    setTimeout(this.loopIncrementProgress.bind(this), 1000)
+    clearInterval(this.loopIncrementProgressIntervalId)
+    this.loopIncrementProgressIntervalId = null
   }
 
 }

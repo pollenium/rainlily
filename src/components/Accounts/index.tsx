@@ -2,43 +2,31 @@ import * as React from 'react'
 import { Account } from '../../classes/Account'
 import { DividerComponent } from '../Divider'
 import { LinearIconComponent } from '../LinearIcon'
-import { SquareSmallComponent } from '../SquareSmall'
+import { SquareComponent } from '../Square'
 import { AuthComponent } from '../Auth'
 import { accountsManager } from '../../globals/accountsManager'
 import classNames from 'classnames'
 import './index.scss'
 
-class AccountComponent extends React.Component<{ account: Account, isAccount: boolean}> {
+class AccountComponent extends React.Component<{ account: Account, isAccount: boolean }> {
   render() {
     return (<div className="flex-columns">
-      <div className="flex-grow flex-shrink overflow-ellipsis pad-small-vertical">
+      <div className="flex-grow flex-shrink overflow-ellipsis">
         { this.props.account.keypair.getAddress().uu.toHex()}
       </div>
-      <div><SquareSmallComponent/></div>
-      <div
-        className="pad-small-vertical text-brighter-on-hover cursor-pointer"
-        onClick={ this.setAccount.bind(this) }
-        style={{ color: this.props.isAccount ? 'white' : ''}}>
-        { this.getSetAccountElement() }
+      <div><SquareComponent/></div>
+      <div>
+        <span
+          className="clickable"
+          onClick={ this.setAccount.bind(this) }
+          style={{ color: this.props.isAccount ? 'white' : ''}}>
+            <LinearIconComponent icon={ this.props.isAccount ? 'check-square' : 'square' }/>
+        </span>
+        &nbsp;
+        <span className="clickable" onClick={ this.removeAccount.bind(this) }>
+          <LinearIconComponent icon="cross-square" align="right"/>
+        </span>
       </div>
-      <div><SquareSmallComponent/></div>
-      <a
-        className="pad-small-vertical cursor-pointer text-brighter-on-hover"
-        href={ this.props.account.getLinkUrl() }
-        target="_blank"
-        >
-        <LinearIconComponent icon="file-search"/>
-      </a>
-      <div><SquareSmallComponent/></div>
-      <div className="pad-small-vertical cursor-pointer text-brighter-on-hover" onClick={ this.removeAccount.bind(this) }>
-        <LinearIconComponent icon="cross"/>
-      </div>
-    </div>)
-  }
-
-  getSetAccountElement(): JSX.Element {
-    return (<div>
-      <LinearIconComponent icon="check"/>
     </div>)
   }
 
@@ -80,6 +68,7 @@ export class AccountsComponent extends React.Component<{}, {
     return (
       <div className="container">
         { this.getAccountsElement() }
+        <DividerComponent/>
         { this.getAddAccountElement() }
       </div>
     )
@@ -96,16 +85,21 @@ export class AccountsComponent extends React.Component<{}, {
         account={ account }
         isAccount={ account === this.state.account }/>
     })
-    return (<div className="pad-horizontal-if-narrow border-bottom">
-      <div className="pad-top text-large">My Accounts</div>
-      <div className="pad-vertical">{ accountElements }</div>
+    return (<div className="pad-horizontal-if-narrow">
+      <SquareComponent/>
+      <div className="text-large">My Accounts</div>
+      <SquareComponent/>
+      { accountElements }
+      <SquareComponent/>
     </div>)
   }
 
   private getAddAccountElement(): JSX.Element {
-    return (<div className="pad-vertical">
-      <div className="text-large pad-horizontal-if-narrow">Add New Account</div>
-      <div><AuthComponent /></div>
+    return (<div className="pad-horizontal-if-narrow">
+      <SquareComponent/>
+      <div className="text-large">Add New Account</div>
+      <SquareComponent/>
+      <AuthComponent />
     </div>)
   }
 }

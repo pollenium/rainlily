@@ -11,6 +11,7 @@
   color: inherit;
   font-family: 'alphanum20';
   font-size: inherit;
+  border-color: $colorDefault;
   &:hover:not(:disabled) {
     color: $colorBright;
     border-color: $colorBright;

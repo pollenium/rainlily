@@ -7,12 +7,15 @@ import { accountsManager } from '../../globals/accountsManager'
 import { dai } from 'pollenium-xanthoceras'
 import { modalManager } from '../../globals/modalManager'
 import { DaiComponent } from '../Dai'
+import { ModalId } from '../../classes/ModalManager'
+import classNames from 'classnames'
 import './index.scss'
 
 export class StatusbarComponent extends React.Component<{},{
   account: Account | null,
   blockNumber: Uint256 | null,
-  attodaiAvailable: Uint256 | null
+  attodaiAvailable: Uint256 | null,
+  modalId: ModalId | null
 }> {
 
   constructor(props) {
@@ -20,8 +23,19 @@ export class StatusbarComponent extends React.Component<{},{
     this.state = {
       account: accountsManager.getAccount(),
       attodaiAvailable: accountsManager.getEngineBalance(dai),
-      blockNumber: null
+      blockNumber: null,
+      modalId: null
     }
+
+    modalManager.modalIdSnowdrop.addHandle((modalId) => {
+      this.setState({ modalId })
+    })
+
+    bellflower.fetchLatestBlock().then((block) => {
+      this.setState({
+        blockNumber: new Uint256(block.number)
+      })
+    })
 
     bellflower.blockSnowdrop.addHandle((block) => {
       this.setState({
@@ -57,14 +71,16 @@ export class StatusbarComponent extends React.Component<{},{
             { this.getDaiBalanceElement() }
           </div>
           <div
-            className="flex-grow flex-shrink flex-columns text-brighter-on-hover cursor-pointer"
+            className={ classNames('flex-grow', 'flex-shrink', 'flex-columns', 'clickable', {
+              'text-brighter': this.state.modalId === ModalId.ACCOUNTS
+            })}
             onClick={ () => { modalManager.openAccounts() } }>
             <div className="flex-grow flex-shrink">
             </div>
             <div className="flex-grow flex-shrink overflow-ellipsis" style={{ maxWidth: 80 }}>
               {this.state.account ? this.state.account.id : '' }
             </div>
-            <div>
+            <div style={{ paddingTop: '.25em' }}>
               <LinearIconComponent icon="user" />
             </div>
           </div>
@@ -79,7 +95,9 @@ export class StatusbarComponent extends React.Component<{},{
     }
     return (
       <div
-        className="text-center text-brighter-on-hover cursor-pointer"
+        className={ classNames('text-center', 'clickable', {
+          'text-brighter': this.state.modalId === ModalId.DAI
+        })}
         onClick={ () => { modalManager.openDaiManager() } }>
         Dai Available: <DaiComponent attodai={ this.state.attodaiAvailable } />
       </div>

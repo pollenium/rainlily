@@ -15,6 +15,3 @@ if (module.hot) {
 } else {
   console.log('not hot')
 }
-
-import { NotificationType } from './classes/NotificationsManager'
-import { notificationsManager } from './globals/notificationsManager'

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createElement, Component } from 'react';
 import { render } from 'react-dom';
-import { NotificationsComponent } from './components/Notifications'
+import { NotificationGroupComponent } from './components/NotificationGroup'
 import { StatusbarComponent } from './components/Statusbar'
 import { NavbarPrimaryComponent } from './components/NavbarPrimary'
 import { NavbarSecondaryComponent } from './components/NavbarSecondary'
@@ -37,7 +37,7 @@ export class AppComponent extends Component<{}, {
     const navbarSecondaryOptionStructs: OptionStruct[] = markets.map((market) => {
       return {
         id: market.id,
-        text: market.name,
+        main: market.name,
         onSelect: () => {
           this.setBannerId(market.id)
           this.setState({
@@ -58,10 +58,10 @@ export class AppComponent extends Component<{}, {
 
     return (
       <div className="full">
+        <NotificationGroupComponent/>
         <BackgroundGroupComponent/>
         <div className="flex-rows full bg-dark">
           <div className="flex-no-change position-relative">
-            <NotificationsComponent/>
             <StatusbarComponent/>
           </div>
           <div className="flex-grow">
@@ -89,7 +89,6 @@ export class AppComponent extends Component<{}, {
               </div>
             </div>
           </div>
-          <BrambleMonitorComponent />
         </div>
       </div>
     );

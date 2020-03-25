@@ -1,53 +1,48 @@
-import * as React from 'react'
+import React, { FormEvent } from 'react'
 import { OptionsComponent, OptionStruct } from '../Options'
 import { DividerComponent } from '../Divider'
-import { PasswordGroupComponent } from '../PasswordGroup'
+import { PasswordInputGroupComponent } from '../PasswordInputGroup'
 import { LinearIconComponent } from '../LinearIcon'
 import { CopyComponent } from '../Copy'
 import { ButtonComponent } from '../Button'
+import { SquareComponent } from '../Square'
 import { generatePassword } from '../../utils/generatePassword'
 import { Uu } from 'pollenium-uvaursi'
 import { accountsManager } from '../../globals/accountsManager'
 
 const uuEmpty = new Uu(new Uint8Array())
 
-export class AuthLoginComponent extends React.Component<{ onLoginButtonClick: () => void }, { password: Uu }> {
+export class AuthLoginComponent extends React.Component<{ onLoginButtonClick: () => void }, { password: Uu | null }> {
 
   constructor(props) {
     super(props)
-    this.state = { password: uuEmpty }
+    this.state = { password: null }
   }
 
   render() {
     return (
-      <div>
-        <DividerComponent/>
-        <form className="pad-top pad-horizontal-if-narrow" onSubmit= { this.onSubmit.bind(this) }>
-          <PasswordGroupComponent
-            label="Password"
-            value = { this.state.password.toUtf8() }
-            onValue={ this.onPasswordInputChange.bind(this) }
+      <form className="pad-horizontal-if-narrow" onSubmit= { this.onSubmit.bind(this) }>
+        <PasswordInputGroupComponent
+          label="Password"
+          onPassword={ this.onPassword.bind(this) }
+        />
+        <div className="pad-top text-right">
+          <ButtonComponent
+            icon="user"
+            main="Login"
+            isDisabled={ this.state.password === null }
           />
-          <div className="pad-top text-right">
-            <ButtonComponent
-              icon="user"
-              text="Login"
-              isDisabled={ this.state.password.u.length === 0 }
-            />
-          </div>
-        </form>
-      </div>
+        </div>
+      </form>
     )
   }
 
-  onPasswordInputChange(passwordUtf8: string) {
-    this.setState({
-      password: Uu.fromUtf8(passwordUtf8)
-    })
-  }0
+  onPassword(password: Uu | null) {
+    this.setState({ password })
+  }
 
-  onSubmit(e) {
-    e.preventDefault()
+  onSubmit(event: FormEvent) {
+    event.preventDefault()
     this.setState({
       password: uuEmpty
     })

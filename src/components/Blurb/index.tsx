@@ -3,7 +3,7 @@ import { LinearIconComponent } from '../LinearIcon'
 import './index.scss'
 import classNames from 'classnames'
 
-export class PasswordGroupComponent extends React.Component<{ label: string }, { isActive: boolean }> {
+export class PasswordInputGroupComponent extends React.Component<{ label: string }, { isActive: boolean }> {
 
   constructor(props) {
     super(props)

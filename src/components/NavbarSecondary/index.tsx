@@ -16,7 +16,7 @@ export class NavbarSecondaryComponent extends React.Component<{
 
     return (
       <div className="navbar-secondary bg-medium bg-glass position-relative">
-        <div className="container pad-horizontal-if-narrow">
+        <div className="container pad-horizontal-if-narrow pad-small-vertical">
           <OptionsComponent
             optionStructs={ this.props.optionStructs }
             optionId={ this.props.optionId }

@@ -4,6 +4,7 @@ import { provider } from './provider'
 import { bellflower } from './bellflower'
 import { notificationsManager } from './notificationsManager'
 import { daishReader } from './daishReader'
+import { engineReader } from './engineReader'
 import { dianthusClient } from './dianthusClient'
 
 export const accountsManager = new AccountsManager({
@@ -13,5 +14,6 @@ export const accountsManager = new AccountsManager({
   notificationsManager,
   dai,
   daishReader,
+  engineReader,
   dianthusClient
 })

@@ -21,7 +21,6 @@ export class ModalComponent extends React.Component<{}, {
     }
 
     modalManager.modalStructSnowdrop.addHandle((modalStruct) => {
-      console.log('modalStruct', modalStruct)
       this.setState({
         ...modalStruct,
         isOpen: true
@@ -32,13 +31,13 @@ export class ModalComponent extends React.Component<{}, {
 
   render() {
     return (
-      <div className={ classNames('modal', { open: this.state.isOpen } )}>
+      <div className={ classNames('modal', { 'display-none': !this.state.isOpen } )}>
         <div className="container text-bright">
           <div className="flex-columns pad-vertical pad-horizontal-if-narrow text-large">
             <div className="flex-grow">
               { this.getTitleElement() }
             </div>
-            <div className="text-right text-brighter-on-hover cursor-pointer text-medium" onClick={ this.close.bind(this) }>
+            <div className="text-right clickable text-medium" onClick={ this.close.bind(this) }>
               <span>Close</span>
               <span className="display-inline-block" style={{ marginBottom: -4 }}>
                 <LinearIconComponent icon="cross"/>
@@ -61,6 +60,7 @@ export class ModalComponent extends React.Component<{}, {
 
   close() {
     this.setState({ isOpen: false })
+    modalManager.modalCloseSnowdrop.emit()
   }
 
 }

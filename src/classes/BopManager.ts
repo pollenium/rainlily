@@ -9,6 +9,7 @@ import { anemoneClient } from '../globals/anemoneClient'
 import { SignedOrder, ORDER_TYPE } from 'pollenium-alchemilla'
 import { Snowdrop } from 'pollenium-snowdrop'
 import Bignumber from 'bignumber.js'
+import { dai, engine } from 'pollenium-xanthoceras'
 
 const applicationId = Uu.fromUtf8('alchemilla.orders.v0').genPaddedLeft(32)
 const e18 = new Bignumber(10).pow(18)
@@ -53,8 +54,12 @@ export class BopManager {
       if (!missive.applicationId.uu.getIsEqual(applicationId)) {
         return
       }
-      
+
       const signedOrder = SignedOrder.fromLigma(missive.applicationData)
+
+      if (!signedOrder.quotToken.uu.getIsEqual(dai)) {
+        return
+      }
 
       const bop = await this.fetchBop()
 

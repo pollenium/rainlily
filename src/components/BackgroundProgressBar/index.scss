@@ -1,39 +1,21 @@
 @import '../../index.scss';
 
-.bramble-monitor {
+.background-progress-bar {
 
   position: relative;
-  background-color: #aaa;
-  color: #333;
-  height: 34px;
+  transition: background-color .1s linear;
 
-  .hidden {
-    display: none;
-  }
-
-  .background {
+  .progress-bar-unfilled {
     @extend .position-absolute;
-    @extend .full;
-    z-index: 1;
-
-    .progress-bar {
-      transition: width 1s linear, background-color 1s ease-in-out;
-      @extend .height-full;
-      background-color: $colorWarning;
-      width: 0%;
-    }
+    @extend .height-full;
+    background-color: rgba(0, 0, 0, .1);
+    width: 100%;
+    right: 0px;
   }
 
   .foreground {
-    @extend .position-absolute;
     @extend .full;
     z-index: 2;
-  }
-
-  &.connected {
-    .progress-bar {
-      background-color: $colorSuccess;
-    }
   }
 
 }

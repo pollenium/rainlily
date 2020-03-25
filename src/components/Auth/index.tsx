@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { OptionsComponent, OptionStruct } from '../Options'
 import { DividerComponent } from '../Divider'
-import { PasswordGroupComponent } from '../PasswordGroup'
+import { PasswordInputGroupComponent } from '../PasswordInputGroup'
 import { AuthCreateComponent } from '../AuthCreate'
 import { AuthLoginComponent } from '../AuthLogin'
+import { SquareComponent } from '../Square'
+import { PromptComponent } from '../Prompt'
 
 enum SubsectionName {
   NULL = 'null',
@@ -23,14 +25,14 @@ export class AuthComponent extends React.Component<{}, { subsectionName: Subsect
     const optionStructs: OptionStruct[] = [
       {
         id: SubsectionName.YES,
-        text: 'Yes',
+        main: 'Yes',
         onSelect: () => {
           this.setState({ subsectionName: SubsectionName.YES })
         }
       },
       {
         id: SubsectionName.NO,
-        text: 'No',
+        main: 'No',
         onSelect: () => {
           this.setState({ subsectionName: SubsectionName.NO })
         }
@@ -40,12 +42,13 @@ export class AuthComponent extends React.Component<{}, { subsectionName: Subsect
     return (
       <div className="auth">
         <div className="pad-horizontal-if-narrow">
-          <OptionsComponent
+          <PromptComponent
             label="Do you have an account?"
             optionStructs={ optionStructs }
             optionId={ this.state.subsectionName }
           />
         </div>
+        <SquareComponent/>
         { this.getSubsectionElement() }
       </div>
     )
@@ -57,12 +60,10 @@ export class AuthComponent extends React.Component<{}, { subsectionName: Subsect
         return null
       case SubsectionName.YES:
         return (<div>
-          <DividerComponent/>
           <AuthLoginComponent  onLoginButtonClick={ this.onLoginButtonClick.bind(this) }/>
         </div>)
       case SubsectionName.NO:
         return (<div>
-          <DividerComponent/>
           <AuthCreateComponent onCreated={ this.onCreated.bind(this) }/>
         </div>)
 

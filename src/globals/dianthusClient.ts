@@ -1,4 +1,6 @@
 import { Client as DianthusClient } from 'pollenium-dianthus'
 
-//'https://dianthus-us-1.herokuapp.com'
-export const dianthusClient = new DianthusClient('http://localhost:3000')
+// const serverUrl = 'https://dianthus-us-1.herokuapp.com'
+const serverUrl = 'http://localhost:3000'
+
+export const dianthusClient = new DianthusClient(serverUrl)

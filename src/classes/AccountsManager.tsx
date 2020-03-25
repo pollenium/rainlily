@@ -9,14 +9,18 @@ import { EngineBalancesMonitor } from './EngineBalanceMonitor'
 import { ethers } from 'ethers'
 import { Bellflower } from 'pollenium-bellflower'
 import { Account } from './Account'
-import { NotificationsManager, NotificationType } from './NotificationsManager'
+import { NotificationsManager } from './NotificationsManager'
+import { Theme } from '../Theme'
 import { DaiComponent } from '../components/Dai'
 import { Client as DianthusClient } from 'pollenium-dianthus'
+import { EngineReader } from 'pollenium-alchemilla'
 import { DaishReader } from 'pollenium-dianella'
+import { THOUSAND, HOUR_S } from 'pollenium-ursinia'
 
 export class AccountsManager {
 
   readonly engine: Address
+  readonly engineReader: EngineReader
   readonly provider: ethers.providers.Provider
   readonly bellflower: Bellflower
   readonly notificationsManager: NotificationsManager
@@ -40,11 +44,13 @@ export class AccountsManager {
     bellflower: Bellflower,
     notificationsManager: NotificationsManager,
     dai: Uish,
+    engineReader: EngineReader,
     daishReader: DaishReader
     dianthusClient: DianthusClient
   }) {
 
     this.engine = new Address(struct.engine)
+    this.engineReader = struct.engineReader
     this.provider = struct.provider
     this.bellflower = struct.bellflower
     this.notificationsManager = struct.notificationsManager
@@ -88,6 +94,21 @@ export class AccountsManager {
   // }
 
   private linkDianthus() {
+
+    let prevEngineAttodaiBalance: Uint256 | null = null
+
+    this.getEngineBalanceSnowdrop(this.dai).addHandle((engineAttodaiBalance) => {
+      if (prevEngineAttodaiBalance !== null && prevEngineAttodaiBalance.compLt(engineAttodaiBalance)) {
+        this.notificationsManager.queueNotification({
+          theme: Theme.SUCCESS,
+          main: (<span><DaiComponent attodai={ engineAttodaiBalance }/> available!</span>)
+        })
+      }
+
+      prevEngineAttodaiBalance = engineAttodaiBalance
+
+    })
+
     this.getNativeBalanceSnowdrop(this.dai).addHandle(async (nativeAttodaiBalance) => {
 
       if (nativeAttodaiBalance.compEq(0)) {
@@ -101,31 +122,47 @@ export class AccountsManager {
         spender: this.engine
       })
 
-      console.log('allowance', allowance.toNumberString(10))
+      this.notificationsManager.queueNotification({
+        theme: Theme.INFO,
+        main: (<span>Deposit of <DaiComponent attodai={ nativeAttodaiBalance }/> initiated</span>)
+      })
+
 
       if (allowance.compEq(0)) {
-
-        this.notificationsManager.queueNotification({
-          type: NotificationType.INFO,
-          mainElement: (<span>Deposit of <DaiComponent attodai={ nativeAttodaiBalance }/> initiated</span>)
-        })
 
         const nonce = await this.daishReader.fetchNonce(holder)
 
         this.dianthusClient.genAndUploadPermitRequest({
           holderPrivateKey: this.account.keypair.privateKey,
+          spender: this.engine,
           nonce
         }).catch((error) => {
-          console.log(error)
           this.notificationsManager.queueNotification({
-            type: NotificationType.ERROR,
-            mainElement: (<span>Deposit Permit Failed: { error.message }</span>)
+            theme: Theme.ERROR,
+            main: `Deposit Permit Failed: ${error.message}`
           })
         })
 
       } else {
-        console.log('genAndUploadDepositSweepRequest')
-        this.dianthusClient.genAndUploadDepositSweepRequest(holder)
+
+        const amount = allowance.compGt(nativeAttodaiBalance) ? nativeAttodaiBalance : allowance
+        const expiration = Math.floor(new Date().getTime() / THOUSAND) + HOUR_S
+
+        console.log('genAndUploadDepositßRequest')
+        this.dianthusClient.genAndUploadDepositRequest({
+          fromPrivateKey: this.account.keypair.privateKey,
+          to: this.account.keypair.getAddress(),
+          token: this.dai,
+          amount: amount,
+          expiration: expiration,
+          nonce: Uu.genRandom(32),
+          actionSalt: await this.engineReader.fetchDepositSalt()
+        }).catch((error) => {
+          this.notificationsManager.queueNotification({
+            theme: Theme.ERROR,
+            main: `Deposit Failed: ${error.message}`
+          })
+        })
       }
 
     })
@@ -147,8 +184,8 @@ export class AccountsManager {
     this.accountsSnowdrop.emit(this.accounts)
 
     this.notificationsManager.queueNotification({
-      type: NotificationType.WARNING,
-      mainElement: (<span>Removed { account.keypair.getAddress().uu.toHex() }</span>)
+      theme: Theme.WARNING,
+      main: `Removed ${ account.keypair.getAddress().uu.toHex() }`
     })
 
     if (this.account && this.account.id === account.id) {
@@ -205,8 +242,8 @@ export class AccountsManager {
     })
 
     this.notificationsManager.queueNotification({
-      type: NotificationType.SUCCESS,
-      mainElement: (<span>Logged into { account.keypair.getAddress().uu.toHex() }</span>)
+      theme: Theme.SUCCESS,
+      main: `Logged into ${account.keypair.getAddress().uu.toHex()}`
     })
 
     this.save()

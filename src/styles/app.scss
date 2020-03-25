@@ -5,13 +5,13 @@ $containerWidth: 800px;
 $colorBright: #ccc;
 $colorBrighter: #eee;
 $colorDefault: #aaa;
-$colorMuted: #777;
+$colorMuted: #333;
 $colorSuccess: #51A351;
 $colorWarning: #F89406;
 $colorError: #BD362F;
 $colorInfo: #0088CC;
 
-$border: 1px solid rgba(255, 255, 255, .1);
+$border: 1px solid $colorMuted;
 
 * {
   box-sizing: border-box !important;
@@ -20,10 +20,10 @@ $border: 1px solid rgba(255, 255, 255, .1);
 }
 
 body {
+  @extend .text-default;
   font-weight: 1000;
   background-color: black;
   overflow: hidden;
-  color: $colorDefault;
   font-size: 16px;
   line-height: 1.25em;
   font-family: 'alphanum20';
@@ -230,6 +230,10 @@ a {
   color: $colorMuted;
 }
 
+.text-default {
+  color: $colorDefault;
+}
+
 .text-bright {
   color: $colorBright;
 }
@@ -243,6 +247,11 @@ a {
   &:hover {
     color: $colorBrighter;
   }
+}
+
+.clickable {
+  @extend .text-brighter-on-hover;
+  @extend .cursor-pointer;
 }
 
 .position-absolute {
@@ -299,4 +308,20 @@ a {
   @extend .transition-color;
   @extend .transition-background-color;
   @extend .transition-border-color;
+}
+
+.theme {
+  color: white;
+}
+.theme-info {
+  background-color: $colorInfo;
+}
+.theme-error {
+  background-color: $colorError;
+}
+.theme-warning {
+  background-color: $colorWarning;
+}
+.theme-success {
+  background-color: $colorSuccess;
 }

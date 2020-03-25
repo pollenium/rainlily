@@ -4,6 +4,7 @@ import { DividerComponent } from '../Divider'
 import { ButtonComponent } from '../Button'
 import { Market } from '../../classes/Market'
 import { CentipricesGroupComponent } from '../CentipricesGroup'
+import { BopComponent } from '../Bop'
 import './index.scss'
 
 export class MarketOverviewComponent extends React.Component<
@@ -31,21 +32,25 @@ export class MarketOverviewComponent extends React.Component<
       <div className="overview container pad-vertical">
         <div className="flex-columns pad-bottom">
           <div style={{ width: '50%' }}>
-            <div className="text-large text-center">Agree</div>
+            <div className="text-large text-center">
+              <BopComponent type="Agree"/>
+            </div>
             <div className="pad-vertical">
               <CentipricesGroupComponent bopManager={ this.props.market.bopAgreeManager }/>
             </div>
             <div className="text-center">
-              <ButtonComponent text="Buy/Sell" />
+              <ButtonComponent main="Buy/Sell" />
             </div>
           </div>
           <div className="flex-grow">
-            <div className="text-large text-center">Disagree</div>
+            <div className="text-large text-center">
+              <BopComponent type="Disagree"/>
+            </div>
             <div className="pad-vertical">
               <CentipricesGroupComponent bopManager={ this.props.market.bopDisagreeManager }/>
             </div>
             <div className="text-center">
-              <ButtonComponent text="Buy/Sell" />
+              <ButtonComponent main="Buy/Sell" />
             </div>
           </div>
         </div>

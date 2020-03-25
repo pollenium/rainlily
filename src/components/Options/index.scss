@@ -6,9 +6,8 @@
   display: inline-block;
 
   .option {
-    @extend .pad-vertical;
     @extend .pad-left;
-    @extend .text-brighter-on-hover;
+    @extend .clickable;
     display: inline-block;
 
     &:first-child {

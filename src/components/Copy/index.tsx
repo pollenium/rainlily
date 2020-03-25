@@ -17,10 +17,10 @@ export class CopyComponent extends React.Component<{ text: string }, { isCopied:
         className={ classNames('copy', 'flex-columns', 'pad', { copied: this.state.isCopied }) }
         onClick= { this.onClick.bind(this) }
         >
-        <div className="text-center flex-grow overflow-ellipsis">{
+        <div className="text-center flex-grow flex-shrink overflow-ellipsis">{
           this.state.isCopied ? 'Copied!' : this.props.text
         }</div>
-        <div className="flex-shrink pad-small-left">
+        <div className="pad-small-left">
           <LinearIconComponent icon={ this.state.isCopied ? 'clipboard-check' : 'clipboard-empty' }/>
         </div>
       </div>

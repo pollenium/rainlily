@@ -3,6 +3,7 @@ import { OptionsComponent, OptionStruct } from '../Options'
 import { DividerComponent } from '../Divider'
 import { MarketOverviewComponent } from '../MarketOverview'
 import { MarketBalancesComponent } from '../MarketBalances'
+import { MarketTradeComponent } from '../MarketTrade'
 import { Market } from '../../classes/Market'
 
 enum SectionName {
@@ -23,25 +24,25 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
 
     const optionStructs: OptionStruct[] = [{
       id: SectionName.OVERVIEW,
-      text: 'Overview',
+      main: 'Overview',
       onSelect: () => {
         this.setState({ sectionName: SectionName.OVERVIEW })
       }
     }, {
       id: SectionName.MARKET,
-      text: 'Market',
+      main: 'Market',
       onSelect: () => {
         this.setState({ sectionName: SectionName.MARKET })
       }
     }, {
       id: SectionName.TRADE,
-      text: 'Buy/Sell',
+      main: 'Buy/Sell',
       onSelect: () => {
         this.setState({ sectionName: SectionName.TRADE })
       }
     }, {
       id: SectionName.BALANCES,
-      text: 'My Balances',
+      main: 'My Balances',
       onSelect: () => {
         this.setState({ sectionName: SectionName.BALANCES })
       }
@@ -50,9 +51,9 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
     const section = this.getSection()
 
     return (
-      <div className="full flex-rows">
+      <div className="full flex-rows bg-dark">
         <div className="flex-no-change">
-          <div className="pad-horizontal-if-narrow">
+          <div className="pad">
             <OptionsComponent
               optionStructs={ optionStructs }
               optionId={ SectionName.OVERVIEW }/>
@@ -69,6 +70,10 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
       case SectionName.OVERVIEW:
         return (
           <MarketOverviewComponent market={ this.props.market }/>
+        )
+      case SectionName.TRADE:
+        return (
+          <MarketTradeComponent market={ this.props.market }/>
         )
       case SectionName.BALANCES:
         return (

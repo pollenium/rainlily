@@ -6,7 +6,7 @@ import './index.scss'
 
 export interface OptionStruct {
   id: string,
-  text: string,
+  main: string | JSX.Element,
   onSelect: () => void,
 }
 
@@ -17,7 +17,7 @@ interface OptionProps {
 }
 
 interface OptionState {
-  text: string,
+  main: string | JSX.Element,
 }
 
 export class OptionComponent extends React.Component<OptionProps, OptionState> {
@@ -38,12 +38,11 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
       <div
         className = { classNames(
           'option',
-          'cursor-pointer',
           { selected: this.props.isSelected })
         }
         onClick = { this.onClick.bind(this) }
         >
-        { this.state.text }
+        { this.state.main }
       </div>
     )
   }
@@ -58,7 +57,6 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
 }
 
 export class OptionsComponent extends React.Component<{
-  label?: string,
   optionStructs: OptionStruct[],
   optionId?: string
 }, {
@@ -89,18 +87,8 @@ export class OptionsComponent extends React.Component<{
 
     return (
       <div className="options">
-        <div className="flex-columns">
-          { this.getLabelElement() }
-          { optionComponents }
-        </div>
+        { optionComponents }
       </div>
     )
-  }
-
-  getLabelElement(): JSX.Element {
-    if (!this.props.label) {
-      return null
-    }
-    return (<div className="display-inline-block pad-vertical pad-right">{this.props.label}</div>)
   }
 }

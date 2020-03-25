@@ -1,0 +1,18 @@
+@import '../../index.scss';
+
+.prompt {
+  @extend .pad-horizontal;
+  @extend .border;
+  @extend .transition-border-color;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+
+  &:hover {
+    border-color: $colorMuted;
+  }
+
+  .label {
+    @extend.pad-small-bottom;
+  }
+}

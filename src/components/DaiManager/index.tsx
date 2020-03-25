@@ -2,17 +2,16 @@ import * as React from 'react'
 import { Account } from '../../classes/Account'
 import { DividerComponent } from '../Divider'
 import { LinearIconComponent } from '../LinearIcon'
-import { SquareSmallComponent } from '../SquareSmall'
+import { SquareComponent } from '../Square'
 import { CopyComponent } from '../Copy'
-import { AuthComponent } from '../Auth'
+import { WithdrawComponent } from '../Withdraw'
 import { DaiComponent } from '../Dai'
+
 import { Uint256 } from 'pollenium-buttercup'
 import { accountsManager } from '../../globals/accountsManager'
 import { dai } from 'pollenium-xanthoceras'
 import classNames from 'classnames'
 import './index.scss'
-
-
 
 export class DaiManagerComponent extends React.Component<{}, {
   account: Account | null,
@@ -57,31 +56,39 @@ export class DaiManagerComponent extends React.Component<{}, {
   render() {
     return (
       <div className="container">
-        <SquareSmallComponent/>
+        <SquareComponent/>
         <div className="pad-horizontal-if-narrow">
           <div className="text-large">Dai Available: <DaiComponent attodai={ this.state.attodaiAvailable }/></div>
-          <SquareSmallComponent/>
+          <SquareComponent/>
           <p>This is the amount of Dai available to trade</p>
         </div>
-        <SquareSmallComponent/>
+        <SquareComponent/>
         <DividerComponent/>
-        <SquareSmallComponent/>
+        <SquareComponent/>
         <div className="pad-horizontal-if-narrow">
-          <div className="text-large">Dai Depositing: : <DaiComponent attodai={ this.state.attodaiDepositing }/></div>
-          <SquareSmallComponent/>
+          <div className="text-large">Dai Depositing: <DaiComponent attodai={ this.state.attodaiDepositing }/></div>
+          <SquareComponent/>
           <p>This is the amount of Dai in the process of being deposited. It may take a few minutes for Dai to be available.</p>
         </div>
-        <SquareSmallComponent/>
+        <SquareComponent/>
         <DividerComponent/>
-        <SquareSmallComponent/>
+        <SquareComponent/>
         <div className="pad-horizontal-if-narrow">
           <div className="text-large">Dai Deposit Address</div>
-          <SquareSmallComponent/>
+          <SquareComponent/>
           <CopyComponent text={ this.state.account.keypair.getAddress().uu.toHex() } />
-          <SquareSmallComponent/>
+          <SquareComponent/>
           <p>
             Dai sent to this address will be deposited to your account. <b>Do not send any other tokens to this address.</b>
           </p>
+        </div>
+        <SquareComponent/>
+        <DividerComponent/>
+        <SquareComponent/>
+        <div className="pad-horizontal-if-narrow">
+          <div className="text-large">Withdraw Dai</div>
+          <SquareComponent/>
+          <WithdrawComponent/>
         </div>
       </div>
     )
