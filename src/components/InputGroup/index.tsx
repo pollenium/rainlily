@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { LinearIconComponent } from '../LinearIcon'
+import { BlurbComponent } from '../Blurb'
+import { Snowdrop } from 'pollenium-snowdrop'
 import './index.scss'
 import classNames from 'classnames'
-import { Snowdrop } from 'pollenium-snowdrop'
 
-export type InputGroupValidate = (value: string) => Promise<string | null>
+export type InputGroupValidate = (value: string) => Promise<string | JSX.Element | null>
 export type InputGroupValidates = InputGroupValidate[]
 
 export interface InputGroupProps {
@@ -14,12 +15,13 @@ export interface InputGroupProps {
   append?: string | JSX.Element,
   onValue: (value: string | null) => void,
   validates?: InputGroupValidates,
-  valueInSnowdrop?: Snowdrop<string | null>
+  valueInSnowdrop?: Snowdrop<string | null>,
+  isAutofocus?: boolean
 }
 
 export interface InputGroupState {
   isActive: boolean,
-  errorMessage: string | null
+  errorMessage: string | JSX.Element | null
 }
 
 export class InputGroupComponent extends React.Component<InputGroupProps, InputGroupState> {
@@ -45,6 +47,10 @@ export class InputGroupComponent extends React.Component<InputGroupProps, InputG
   }
 
   render() {
+    return <BlurbComponent main={ this.getMainElement() }/>
+  }
+
+  getMainElement(): JSX.Element {
     return (
       <div className={
         classNames('input-group', {
@@ -63,6 +69,7 @@ export class InputGroupComponent extends React.Component<InputGroupProps, InputG
               onBlur={ this.onInputBlur.bind(this) }
               onInput={ this.onInputInput.bind(this) }
               ref={ (input) => { this.input = input}}
+              autoFocus={ this.props.isAutofocus }
             />
           </div>
           { this.getAppendElement() }
@@ -70,6 +77,7 @@ export class InputGroupComponent extends React.Component<InputGroupProps, InputG
         { this.getErrorMessageElement() }
       </div>
     )
+
   }
 
   getLabelElement(): JSX.Element | null {
@@ -117,6 +125,12 @@ export class InputGroupComponent extends React.Component<InputGroupProps, InputG
   async onInputInput() {
 
     const value = this.input.value
+
+    if (value.length === 0) {
+      this.setState({ errorMessage: null })
+      this.props.onValue(null)
+      return
+    }
 
     if (this.props.validates && this.props.validates.length > 0) {
       for (let i = 0; i < this.props.validates.length; i++) {

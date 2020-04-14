@@ -138,6 +138,34 @@ a {
   @extend .pad-small-right;
 }
 
+.margin-horizontal {
+  @extend .margin-left;
+  @extend .margin-right;
+}
+
+.margin-left {
+  margin-left: $space;
+}
+
+.margin-right {
+  margin-right: $space;
+}
+
+.margin-bottom {
+  margin-bottom: $space;
+}
+
+.margin-horizontal-if-narrow {
+  @media(max-width: $containerWidth + $space) {
+    @extend .margin-horizontal;
+  }
+  @media(min-width: $containerWidth + $space) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+
 .border-top {
   border-top: $border;
 }
@@ -201,6 +229,11 @@ a {
   flex-shrink: 1 !important;
 }
 
+.flex-change {
+  @extend .flex-grow;
+  @extend .flex-shrink;
+}
+
 .flex-no-change {
   flex-shrink: 0;
   flex-grow: 0;
@@ -243,7 +276,7 @@ a {
 }
 
 .text-brighter-on-hover {
-  @extend .transition-color;
+  // @extend .transition-color;
   &:hover {
     color: $colorBrighter;
   }

@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Address } from 'pollenium-buttercup'
 import { Uish, Uu } from 'pollenium-uvaursi'
 import { MarketComponent } from '../components/Market'
-import { BopManager, BopType } from './BopManager'
+import { BopManager } from './BopManager'
+import { BopType } from '../BopType'
 
 export interface MarketStruct {
   name: string,
@@ -32,6 +33,14 @@ export class Market {
 
     this.bopAgreeManager = new BopManager({ ...struct, bopType: BopType.AGREE })
     this.bopDisagreeManager = new BopManager({ ...struct, bopType: BopType.DISAGREE })
+  }
+
+  getBopManager(bopType: BopType): BopManager {
+    if (bopType === BopType.AGREE) {
+      return this.bopAgreeManager
+    } else {
+      return this.bopDisagreeManager
+    }
   }
 
   getElement(): JSX.Element {

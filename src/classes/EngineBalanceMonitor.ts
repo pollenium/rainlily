@@ -36,7 +36,7 @@ export class EngineBalancesMonitor {
       address: struct.engine
     })
 
-    struct.bellflower.blockSnowdrop.addHandle((block) => {
+    struct.bellflower.blockIndexSnowdrop.addHandle(() => {
       this.updateTokenBalanceMonitors()
     })
   }

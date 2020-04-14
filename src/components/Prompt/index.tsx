@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { LinearIconComponent } from '../LinearIcon'
+import { BlurbComponent } from '../Blurb'
 import classNames from 'classnames'
 import { Snowdrop } from 'pollenium-snowdrop'
 import { OptionStruct, OptionsComponent } from '../Options'
@@ -14,6 +15,10 @@ export class PromptComponent extends React.Component<{
   private readonly optionIdSnowdrop = new Snowdrop<string>()
 
   render() {
+    return <BlurbComponent main={ this.getMainElement() }/>
+  }
+
+  getMainElement(): JSX.Element {
 
     return (
       <div className="prompt">

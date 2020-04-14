@@ -1,0 +1,6 @@
+@import '../../index.scss';
+
+.error-message {
+  color: $colorError;
+  @extend .pad-small-top;
+}

@@ -5,9 +5,9 @@ import { Theme } from '../Theme'
 
 export const bellflower = new Bellflower(provider)
 
-bellflower.blockSnowdrop.addHandle((block) => {
+bellflower.blockIndexSnowdrop.addHandle((blockIndex) => {
   notificationsManager.queueNotification({
     theme: Theme.INFO,
-    main: `Received Block #${block.number}`
+    main: `Received Block #${blockIndex.toNumberString(10)}`
   })
 })

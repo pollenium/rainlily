@@ -109,7 +109,8 @@ export class AccountsManager {
 
     })
 
-    this.getNativeBalanceSnowdrop(this.dai).addHandle(async (nativeAttodaiBalance) => {
+    this.bellflower.blockIndexSnowdrop.addHandle(async () => {
+      const nativeAttodaiBalance = await this.fetchNativeBalance(this.dai)
 
       if (nativeAttodaiBalance.compEq(0)) {
         return
@@ -229,16 +230,20 @@ export class AccountsManager {
     this.account = account
     this.accountSnowdrop.emit(this.account)
 
-    Object.keys(this.engineBalanceSundropsByTokenHex).forEach((tokenHex) => {
+    Object.keys(this.engineBalanceSundropsByTokenHex).forEach(async (tokenHex) => {
       const token = new Address(Uu.fromHexish(tokenHex))
       const parentSnowdrop = this.account.getEngineBalanceInfo(token).balanceSnowdrop
       this.engineBalanceSundropsByTokenHex[tokenHex].setParentSnowdrop(parentSnowdrop)
+      const balance = await this.fetchEngineBalance(token)
+      parentSnowdrop.emit(balance)
     })
 
-    Object.keys(this.nativeBalanceSundropsByTokenHex).forEach((tokenHex) => {
+    Object.keys(this.nativeBalanceSundropsByTokenHex).forEach(async (tokenHex) => {
       const token = new Address(Uu.fromHexish(tokenHex))
       const parentSnowdrop = this.account.getNativeBalanceInfo(token).balanceSnowdrop
       this.nativeBalanceSundropsByTokenHex[tokenHex].setParentSnowdrop(parentSnowdrop)
+      const balance = await this.fetchNativeBalance(token)
+      parentSnowdrop.emit(balance)
     })
 
     this.notificationsManager.queueNotification({

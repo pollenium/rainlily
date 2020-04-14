@@ -13,7 +13,7 @@ import './index.scss'
 
 export class StatusbarComponent extends React.Component<{},{
   account: Account | null,
-  blockNumber: Uint256 | null,
+  blockIndex: Uint256 | null,
   attodaiAvailable: Uint256 | null,
   modalId: ModalId | null
 }> {
@@ -23,7 +23,7 @@ export class StatusbarComponent extends React.Component<{},{
     this.state = {
       account: accountsManager.getAccount(),
       attodaiAvailable: accountsManager.getEngineBalance(dai),
-      blockNumber: null,
+      blockIndex: null,
       modalId: null
     }
 
@@ -31,16 +31,15 @@ export class StatusbarComponent extends React.Component<{},{
       this.setState({ modalId })
     })
 
-    bellflower.fetchLatestBlock().then((block) => {
-      this.setState({
-        blockNumber: new Uint256(block.number)
-      })
+    bellflower.fetchLatestBlockIndex().then((blockIndex) => {
+      this.setState({ blockIndex })
     })
 
-    bellflower.blockSnowdrop.addHandle((block) => {
-      this.setState({
-        blockNumber: new Uint256(block.number)
-      })
+    bellflower.blockIndexSnowdrop.addHandle((blockIndex) => {
+      if (this.state.blockIndex !== null && this.state.blockIndex.compGt(blockIndex)) {
+        return
+      }
+      this.setState({ blockIndex: blockIndex })
     })
 
     accountsManager.fetchEngineBalance(dai).then((attodaiAvailable) => {
@@ -65,7 +64,7 @@ export class StatusbarComponent extends React.Component<{},{
       <div className="statusbar">
         <div className="container pad-small-vertical pad-horizontal-if-narrow flex-columns">
           <div className="width-third">
-            Block #{this.state.blockNumber ? this.state.blockNumber.toNumberString(10) : '' }
+            Block #{this.state.blockIndex ? this.state.blockIndex.toNumberString(10) : '' }
           </div>
           <div className="width-third">
             { this.getDaiBalanceElement() }

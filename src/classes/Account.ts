@@ -89,7 +89,7 @@ export class Account {
 
     const balanceInfo = this.engineBalanceInfosByTokenHex[tokenHex] = new BalanceInfo()
 
-    this.bellflower.blockSnowdrop.addHandle(async () => {
+    this.bellflower.blockIndexSnowdrop.addHandle(async () => {
       const balance = await this.engineReader.fetchBalance({
         holder: this.keypair.getAddress(),
         token: token
@@ -109,7 +109,7 @@ export class Account {
 
     const balanceInfo = this.nativeBalanceInfosByTokenHex[tokenHex] = new BalanceInfo()
 
-    this.bellflower.blockSnowdrop.addHandle(async () => {
+    this.bellflower.blockIndexSnowdrop.addHandle(async () => {
       const tokenReader = new TokenReader({
         address: token,
         provider: this.provider

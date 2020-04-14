@@ -6,18 +6,15 @@ import { OverseerReader, BopReader } from 'pollenium-honesty'
 import { Primrose } from 'pollenium-primrose'
 import { provider } from '../globals/provider'
 import { anemoneClient } from '../globals/anemoneClient'
-import { SignedOrder, ORDER_TYPE } from 'pollenium-alchemilla'
+import { SignedOrder, OrderDirection } from 'pollenium-alchemilla'
 import { Snowdrop } from 'pollenium-snowdrop'
 import Bignumber from 'bignumber.js'
+import { BopType } from '../BopType'
 import { dai, engine } from 'pollenium-xanthoceras'
+import { applicationId } from '../globals/applicationId'
 
-const applicationId = Uu.fromUtf8('alchemilla.orders.v0').genPaddedLeft(32)
 const e18 = new Bignumber(10).pow(18)
 
-export enum BopType {
-  AGREE = 'agree',
-  DISAGREE = 'disagree'
-}
 
 interface CentipriceSnowdropPair {
   buyy: Snowdrop<number>
@@ -30,17 +27,22 @@ export interface BopManagerStruct {
   overseer: Uish
 }
 
+interface Price {
+  numer: Uint256,
+  denom: Uint256,
+  rounded: Uint256
+}
+
 export class BopManager {
 
   readonly bopType: BopType
   readonly overseer: Address
-  readonly overseerReader: OverseerReader
+  readonly sellPriceSnowdrop = new Snowdrop<Price | null>()
+  readonly buyyPriceSnowdrop = new Snowdrop<Price | null>()
 
+
+  private overseerReader: OverseerReader
   private bopPrimrose: Primrose<Address>
-
-  private centipriceSnowdropPairByBlockNumberString: {
-    [blockNumberString: string]: CentipriceSnowdropPair
-  } = {}
 
   constructor(readonly struct: BopManagerStruct) {
     this.bopType = struct.bopType
@@ -67,34 +69,18 @@ export class BopManager {
         return
       }
 
-      const centiprice =
-        signedOrder
-          .getPrice()
-          .div(e18)
-          .times(100)
-          .integerValue(Bignumber.ROUND_HALF_CEIL)
-          .toNumber()
+      const price: Price = {
+        numer: signedOrder.priceNumer,
+        denom: signedOrder.priceDenom,
+        rounded: signedOrder.priceNumer.opDiv(signedOrder.priceDenom)
+      }
 
-      const centipriceSnowdropPair = this.getCentipriceSnowdropPair(signedOrder.blockNumber)
-
-      if (signedOrder.type === ORDER_TYPE.BUYY) {
-        centipriceSnowdropPair.buyy.emit(centiprice)
+      if (signedOrder.direction === OrderDirection.BUYY) {
+        this.buyyPriceSnowdrop.emit(price)
       } else {
-        centipriceSnowdropPair.sell.emit(centiprice)
+        this.sellPriceSnowdrop.emit(price)
       }
     })
-  }
-
-  getCentipriceSnowdropPair(blockNumberUintable: Uintable): CentipriceSnowdropPair {
-    const blockNumber = new Uint256(blockNumberUintable)
-    const blockNumberString = blockNumber.toNumberString(10)
-    if (this.centipriceSnowdropPairByBlockNumberString[blockNumberString] === undefined) {
-      this.centipriceSnowdropPairByBlockNumberString[blockNumberString] = {
-        buyy: new Snowdrop<number>(),
-        sell: new Snowdrop<number>()
-      }
-    }
-    return this.centipriceSnowdropPairByBlockNumberString[blockNumberString]
   }
 
   async fetchBop(): Promise<Address> {

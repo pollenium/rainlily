@@ -1,12 +1,6 @@
 @import '../../index.scss';
 
 .input-group {
-  @extend .pad-left;
-  @extend .border;
-  @extend .transition-color;
-  border-top: 0;
-  border-bottom: 0;
-  border-right: 0;
   .main {
     @extend .transition-border-color;
     border-bottom: 1px solid $colorMuted;

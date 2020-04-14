@@ -10,7 +10,8 @@ import Bignumber from 'bignumber.js'
 interface DaiInputGroupProps extends Pick<InputGroupProps, 'label'> {
   validates?: InputGroupValidates,
   onAmount: (amount: Uint256 | null) => void,
-  amountInSnowdrop?: Snowdrop<Uintable | null>
+  amountInSnowdrop?: Snowdrop<Uintable | null>,
+  isAutofocus?: boolean
 }
 
 const validates: InputGroupValidates = [
@@ -69,6 +70,7 @@ export class AmountInputGroupComponent extends React.Component<DaiInputGroupProp
       ]}
       onValue= { this.onValue.bind(this) }
       valueInSnowdrop={ this.valueInSnowdrop }
+      isAutofocus={ this.props.isAutofocus }
     />)
   }
 

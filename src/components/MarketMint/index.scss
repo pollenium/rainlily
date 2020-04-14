@@ -1,0 +1,9 @@
+@import '../../index.scss';
+
+.overview {
+  .explanation {
+    p {
+      @extend .pad-small-bottom;
+    }
+  }
+}

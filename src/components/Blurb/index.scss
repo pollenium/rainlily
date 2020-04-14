@@ -1,27 +1,22 @@
 @import '../../index.scss';
 
-.input-group {
-  transition: color 0.5s ease-out 0s;
-  .main {
-    border-bottom: 1px solid $colorDefault;
-  }
-  .input {
-    @extend .pad-small-horizontal;
-    border: none;
-    background: none;
-    outline: none;
-    color: inherit;
-    font-family: 'alphanum20';
-    font-size: inherit;
-  }
-  &.active {
+.blurb {
+  @extend .margin-left;
+  @extend .pad-horizontal;
+  @extend .border;
+  @extend .transition-color;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+
+  &:hover {
+    border-color: $colorBright;
     color: $colorBright;
-    .main {
-      border-bottom: 1px solid $colorBright;
-    }
-    .input {
-      color: $colorBrighter;
-    }
+  }
+
+  &.active {
+    border-color: $colorBrighter;
+    color: $colorBrighter;
   }
 
 }

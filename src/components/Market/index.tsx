@@ -4,13 +4,17 @@ import { DividerComponent } from '../Divider'
 import { MarketOverviewComponent } from '../MarketOverview'
 import { MarketBalancesComponent } from '../MarketBalances'
 import { MarketTradeComponent } from '../MarketTrade'
+import { MarketOrderRequestsComponent } from '../MarketOrderRequests'
+import { MarketMintComponent } from '../MarketMint'
 import { Market } from '../../classes/Market'
 
 enum SectionName {
   OVERVIEW = 'overview',
   MARKET   = 'market',
   TRADE    = 'trade',
-  BALANCES = 'balances'
+  BALANCES = 'balances',
+  ORDERS = 'orders',
+  MINT = 'mint'
 }
 
 export class MarketComponent extends React.Component<{ market: Market }, { sectionName: SectionName }> {
@@ -41,10 +45,16 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
         this.setState({ sectionName: SectionName.TRADE })
       }
     }, {
-      id: SectionName.BALANCES,
-      main: 'My Balances',
+      id: SectionName.ORDERS,
+      main: 'Orders',
       onSelect: () => {
-        this.setState({ sectionName: SectionName.BALANCES })
+        this.setState({ sectionName: SectionName.ORDERS })
+      }
+    }, {
+      id: SectionName.MINT,
+      main: 'Mint',
+      onSelect: () => {
+        this.setState({ sectionName: SectionName.MINT })
       }
     }]
 
@@ -78,6 +88,14 @@ export class MarketComponent extends React.Component<{ market: Market }, { secti
       case SectionName.BALANCES:
         return (
           <MarketBalancesComponent market={ this.props.market }/>
+        )
+      case SectionName.ORDERS:
+        return (
+          <MarketOrderRequestsComponent market={ this.props.market }/>
+        )
+      case SectionName.MINT:
+        return (
+          <MarketMintComponent market={ this.props.market }/>
         )
       default:
         return (

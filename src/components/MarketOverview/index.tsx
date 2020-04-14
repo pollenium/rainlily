@@ -3,9 +3,80 @@ import { OptionsComponent, OptionStruct } from '../Options'
 import { DividerComponent } from '../Divider'
 import { ButtonComponent } from '../Button'
 import { Market } from '../../classes/Market'
-import { CentipricesGroupComponent } from '../CentipricesGroup'
-import { BopComponent } from '../Bop'
+import { BopManager } from '../../classes/BopManager'
+import { DaiComponent } from '../Dai'
+import { BopTypeComponent } from '../BopType'
+import { BopPricesComponent } from '../BopPrices'
+import { BopType } from '../../BopType'
+import { Account } from '../../classes/Account'
+import { Uint256 } from 'pollenium-buttercup'
+import { accountsManager } from '../../globals/accountsManager'
 import './index.scss'
+
+class BopOverview extends React.Component<
+  { bopManager: BopManager },
+  { account: Account | null, balance: Uint256 | null }
+> {
+
+  private accountHandleId: number | null = null
+  private balanceHandleId: number | null = null
+
+  constructor(props) {
+    super(props)
+    this.state = { account: accountsManager.getAccount(), balance: null }
+  }
+
+  async componentWillMount() {
+    this.accountHandleId = accountsManager.accountSnowdrop.addHandle(async (account) => {
+      this.setState({ account })
+    })
+
+    const bop = await this.props.bopManager.fetchBop()
+    const balance = await accountsManager.fetchEngineBalance(bop)
+    this.setState({ balance })
+
+    this.balanceHandleId = accountsManager.getEngineBalanceSnowdrop(bop).addHandle((balance) => {
+      this.setState({ balance })
+    })
+  }
+
+  async componentWillUnmount() {
+    if (this.accountHandleId !== null) {
+      accountsManager.accountSnowdrop.removeHandleById(this.accountHandleId)
+      this.accountHandleId = null
+    }
+
+    if (this.balanceHandleId !== null) {
+      const bop = await this.props.bopManager.fetchBop()
+      accountsManager.getEngineBalanceSnowdrop(bop).removeHandleById(this.balanceHandleId)
+      this.balanceHandleId = null
+    }
+  }
+
+  render() {
+    return (<div>
+      <div className="text-large text-center">
+        <BopTypeComponent bopType={ this.props.bopManager.bopType }/>
+      </div>
+      { this.getBalanceElement() }
+      <div className="pad-vertical text-center">
+        <BopPricesComponent bopManager={ this.props.bopManager }/>
+      </div>
+      <div className="text-center">
+        <ButtonComponent main="Buy/Sell" />
+      </div>
+    </div>)
+  }
+
+  getBalanceElement(): JSX.Element {
+    if (this.state.account === null) {
+      return null
+    }
+    return (<div className="pad-small-top text-center">
+      Balance: { this.state.balance === null ? '-' : this.state.balance.toNumberString(10) }
+    </div>)
+  }
+}
 
 export class MarketOverviewComponent extends React.Component<
   { market: Market },
@@ -32,26 +103,10 @@ export class MarketOverviewComponent extends React.Component<
       <div className="overview container pad-vertical">
         <div className="flex-columns pad-bottom">
           <div style={{ width: '50%' }}>
-            <div className="text-large text-center">
-              <BopComponent type="Agree"/>
-            </div>
-            <div className="pad-vertical">
-              <CentipricesGroupComponent bopManager={ this.props.market.bopAgreeManager }/>
-            </div>
-            <div className="text-center">
-              <ButtonComponent main="Buy/Sell" />
-            </div>
+            <BopOverview bopManager={ this.props.market.bopAgreeManager } />
           </div>
           <div className="flex-grow">
-            <div className="text-large text-center">
-              <BopComponent type="Disagree"/>
-            </div>
-            <div className="pad-vertical">
-              <CentipricesGroupComponent bopManager={ this.props.market.bopDisagreeManager }/>
-            </div>
-            <div className="text-center">
-              <ButtonComponent main="Buy/Sell" />
-            </div>
+            <BopOverview bopManager={ this.props.market.bopDisagreeManager } />
           </div>
         </div>
         <DividerComponent/>
