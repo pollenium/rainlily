@@ -1,3 +1,3 @@
-import { NotificationsManager } from '../classes/NotificationsManager'
+import { NotificationsManager } from '../lib/NotificationsManager'
 
 export const notificationsManager = new NotificationsManager()

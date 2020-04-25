@@ -3,7 +3,7 @@ import { OptionsComponent, OptionStruct } from '../Options'
 import { DividerComponent } from '../Divider'
 import { AuthComponent } from '../Auth'
 import { MarketOverviewComponent } from '../MarketOverview'
-import { Market } from '../../classes/Market'
+import { Market } from '../../lib/Market'
 import { Snowdrop } from 'pollenium-snowdrop'
 
 export interface BannerStruct {

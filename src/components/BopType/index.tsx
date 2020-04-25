@@ -12,7 +12,6 @@ export class BopTypeComponent extends React.Component<{
       <span style={{
         fontSize: '.7em',
         paddingRight: '.2em',
-        height: '100%',
         display: 'inline-block' }}>
         <LinearIconComponent icon={ this.props.bopType === BopType.AGREE ? 'thumbs-up2' : 'thumbs-down2' }/>
       </span>{ this.props.bopType === BopType.AGREE ? 'Agree' : 'Disagree' }{ this.props.isSingular ? '' : 's'}

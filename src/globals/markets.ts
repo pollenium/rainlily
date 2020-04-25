@@ -1,4 +1,4 @@
-import { Market } from '../classes/Market'
+import { Market } from '../lib/Market'
 import { overseers } from 'pollenium-xanthoceras'
 
 export const markets: Market[] = [

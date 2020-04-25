@@ -7,7 +7,7 @@
     "node": "12.3.1"
   },
   "scripts": {
-    "test": "jasmine",
+    "test": "jest",
     "lint": "eslint",
     "build": "npx webpack --config webpack.config.js --hot",
     "server": "webpack-dev-server --hot --mode development"
@@ -66,9 +66,11 @@
     "file-loader": "^5.0.2",
     "forever": "^2.0.0",
     "jasmine": "^3.4.0",
+    "jest": "^25.4.0",
     "module-replace-webpack-plugin": "0.0.12",
-    "pollenium-xanthoceras": "^9.0.0",
+    "pollenium-xanthoceras": "^9.1.0",
     "react-hot-loader": "^4.5.3",
+    "ts-jest": "^25.4.0",
     "ts-loader": "^6.2.1",
     "ttf-loader": "^1.0.2",
     "typescript": "^3.8.3",

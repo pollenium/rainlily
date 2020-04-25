@@ -1,0 +1,20 @@
+@import '../../index.scss';
+
+.book-chart {
+  .column {
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+  .column-section {
+    transition: height .5s ease-in-out;
+  }
+  .column-section-buyy {
+    background-color: #999;
+  }
+  .column-section-sell {
+    background-color: #eee;
+  }
+  .column {
+    background-color: #000;
+  }
+}

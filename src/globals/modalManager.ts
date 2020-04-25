@@ -1,3 +1,3 @@
-import { ModalManager } from '../classes/ModalManager'
+import { ModalManager } from '../lib/ModalManager'
 
 export const modalManager = new ModalManager()

@@ -1,49 +1,38 @@
 import * as React from 'react'
-import { BopManager } from '../../classes/BopManager'
+import { BopManager } from '../../lib/BopManager'
 import { DaiComponent } from '../Dai'
 import { Uint256 } from 'pollenium-buttercup'
+import { PriceRange } from '../../lib/PriceRange'
 
 export class BopPricesComponent extends React.Component<
   { bopManager: BopManager },
-  {
-    buyyPrice: Uint256 | null,
-    sellPrice: Uint256 | null
-  }
+  { priceRange: PriceRange | null }
 > {
 
-  private buyyPriceHandleId: number | null = null
-  private sellPriceHandleId: number | null = null
+  private priceRangeHandleId: number | null = null
 
   constructor(props) {
     super(props)
-    this.state = { buyyPrice: null, sellPrice: null }
+    this.state = { priceRange: null }
   }
 
   componentWillMount() {
-    this.buyyPriceHandleId = this.props.bopManager.buyyPriceSnowdrop.addHandle((price) => {
-      this.setState({ buyyPrice: price.rounded })
+    this.priceRangeHandleId = this.props.bopManager.priceRangeSnowdrop.addHandle((priceRange) => {
+      this.setState({ priceRange })
     })
 
-    this.sellPriceHandleId = this.props.bopManager.sellPriceSnowdrop.addHandle((price) => {
-      this.setState({ sellPrice: price.rounded })
-    })
   }
 
   componentWillUnmount() {
-    if (this.buyyPriceHandleId !== null) {
-      this.props.bopManager.buyyPriceSnowdrop.removeHandleById(this.buyyPriceHandleId)
-      this.buyyPriceHandleId = null
-    }
-
-    if (this.sellPriceHandleId !== null) {
-      this.props.bopManager.sellPriceSnowdrop.removeHandleById(this.sellPriceHandleId)
-      this.sellPriceHandleId = null
+    if (this.priceRangeHandleId !== null) {
+      this.props.bopManager.priceRangeSnowdrop.removeHandleById(this.priceRangeHandleId)
+      this.priceRangeHandleId = null
     }
   }
 
   render() {
     return <span>
-      <DaiComponent attodai={this.state.buyyPrice}/> - <DaiComponent attodai={this.state.sellPrice}/>
+      <DaiComponent attodai={this.state.priceRange.min}/> - <DaiComponent attodai={this.state.priceRange.max}/>
     </span>
   }
 }

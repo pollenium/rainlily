@@ -6,7 +6,7 @@ import { LinearIconComponent } from '../LinearIcon'
 import { CopyComponent } from '../Copy'
 import { ButtonComponent } from '../Button'
 import { SquareComponent } from '../Square'
-import { generatePassword } from '../../utils/generatePassword'
+import { generatePassword } from '../../lib/generatePassword'
 import { Uu } from 'pollenium-uvaursi'
 import { PromptComponent } from '../Prompt'
 

@@ -6,7 +6,7 @@ import { Uu, Uish } from 'pollenium-uvaursi'
 import { Bytes32, Address } from 'pollenium-buttercup'
 import { Keypair } from 'pollenium-ilex'
 import { Primrose } from 'pollenium-primrose'
-import { calcOrderExpiration } from '../utils/calcOrderExpiration'
+import { calcOrderExpiration } from '../lib/calcOrderExpiration'
 import { OrderRequestStruct, OrderRequest } from './OrderRequest'
 import delay from 'delay'
 

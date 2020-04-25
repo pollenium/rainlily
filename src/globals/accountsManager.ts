@@ -1,4 +1,4 @@
-import { AccountsManager } from '../classes/AccountsManager'
+import { AccountsManager } from '../lib/AccountsManager'
 import { engine, dai } from 'pollenium-xanthoceras'
 import { provider } from './provider'
 import { bellflower } from './bellflower'

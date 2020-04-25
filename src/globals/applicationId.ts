@@ -1,3 +1,3 @@
-import { Uu } from 'pollenium-uvaursi'
+import { applicationIds } from 'pollenium-xanthoceras'
 
-export const applicationId = Uu.fromUtf8('alchemilla.orders.v0').genPaddedLeft(32)
+export const applicationId = applicationIds.alchemilla.signedOrders.v0

@@ -1,4 +1,4 @@
-import { OrderRequestsManager } from '../classes/OrderRequestsManager'
+import { OrderRequestsManager } from '../lib/OrderRequestsManager'
 import { bellflower } from './bellflower'
 import { anemoneClient } from './anemoneClient'
 import { engineReader } from './engineReader'

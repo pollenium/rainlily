@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { notificationsManager } from '../../globals/notificationsManager'
-import { Notification } from '../../classes/NotificationsManager'
+import { Notification } from '../../lib/NotificationsManager'
 import { BackgroundProgressBarComponent } from '../BackgroundProgressBar'
 import { LinearIconComponent } from '../LinearIcon'
 import { SquareComponent } from '../Square'

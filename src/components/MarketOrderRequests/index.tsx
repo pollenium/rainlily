@@ -2,8 +2,8 @@ import * as React from 'react'
 import { OptionsComponent, OptionStruct } from '../Options'
 import { DividerComponent } from '../Divider'
 import { ButtonComponent } from '../Button'
-import { Market } from '../../classes/Market'
-import { BopManager } from '../../classes/BopManager'
+import { Market } from '../../lib/Market'
+import { BopManager } from '../../lib/BopManager'
 import { AuthComponent } from '../Auth'
 import { SquareComponent } from '../Square'
 import { BopTypeComponent } from '../BopType'
@@ -11,12 +11,12 @@ import { DaiComponent } from '../Dai'
 import { OrderDirectionComponent } from '../OrderDirection'
 import { BlurbComponent } from '../Blurb'
 import { Uint256 } from 'pollenium-buttercup'
-import { Account } from '../../classes/Account'
-import { OrderRequest, OrderRequestStatus } from '../../classes/OrderRequest'
+import { Account } from '../../lib/Account'
+import { OrderRequest, OrderRequestStatus } from '../../lib/OrderRequest'
 import { bellflower } from '../../globals/bellflower'
 import { accountsManager } from '../../globals/accountsManager'
 import { orderRequestsManager } from '../../globals/orderRequestsManager'
-import { genEpoch } from '../../utils/genEpoch'
+import { genEpoch } from '../../lib/genEpoch'
 import './index.scss'
 
 class OrderRequestComponent extends React.Component<
@@ -52,7 +52,6 @@ class OrderRequestComponent extends React.Component<
     })
 
     this.statusHandleId = this.props.orderRequest.statusSnowdrop.addHandle((status) => {
-      console.log('setState', status)
       this.setState({ status })
     })
 

@@ -8,8 +8,8 @@ import { Keypair } from 'pollenium-ilex'
 import { Primrose } from 'pollenium-primrose'
 import { Market } from './Market'
 import { BopType } from '../BopType'
-import { calcOrderExpiration } from '../utils/calcOrderExpiration'
-import { genEpoch } from '../utils/genEpoch'
+import { calcOrderExpiration } from '../lib/calcOrderExpiration'
+import { genEpoch } from '../lib/genEpoch'
 import { e18 } from '../globals/e18'
 import delay from 'delay'
 
@@ -65,7 +65,6 @@ export class OrderRequest {
 
   async fetchIsFilled(): Promise<boolean> {
     const cumulativeFill = await this.fetchCumulativeFill()
-    console.log('fetchIsFilled', cumulativeFill.toNumberString(10), this.getTokenLimit().toNumberString(10))
     if (cumulativeFill.compEq(this.getTokenLimit())) {
       return true
     }

@@ -6,7 +6,7 @@ import { MarketBalancesComponent } from '../MarketBalances'
 import { MarketTradeComponent } from '../MarketTrade'
 import { MarketOrderRequestsComponent } from '../MarketOrderRequests'
 import { MarketMintComponent } from '../MarketMint'
-import { Market } from '../../classes/Market'
+import { Market } from '../../lib/Market'
 
 enum SectionName {
   OVERVIEW = 'overview',

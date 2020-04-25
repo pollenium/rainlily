@@ -206,9 +206,6 @@ a {
 
 .flex {
   display: flex;
-  & > * {
-    @extend .flex-no-change;
-  }
 }
 
 .flex-rows {

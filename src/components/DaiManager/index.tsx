@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Account } from '../../classes/Account'
+import { Account } from '../../lib/Account'
 import { DividerComponent } from '../Divider'
 import { LinearIconComponent } from '../LinearIcon'
 import { SquareComponent } from '../Square'
